@@ -37,57 +37,57 @@ namespace WebFastFood.Repository
 
         public void AddSide(Side side)
         {
-            throw new NotImplementedException();
+            context.Sides.Add(side);
         }
 
         public void DeleteBeverage(Beverage beverage)
         {
-            throw new NotImplementedException();
+            context.Beverages.Remove(beverage);
         }
 
         public void DeleteBurger(Burger burger)
         {
-            throw new NotImplementedException();
+            context.Burgers.Remove(burger);
         }
 
         public void DeleteDessert(Dessert dessert)
         {
-            throw new NotImplementedException();
+            context.Desserts.Remove(dessert);
         }
 
         public void DeleteMenu(Menu menu)
         {
-            throw new NotImplementedException();
+            context.Menus.Remove(menu);
         }
 
         public void DeleteSide(Side side)
         {
-            throw new NotImplementedException();
+            context.Sides.Remove(side);
         }
 
         public IQueryable<Beverage> GetBeverages()
         {
-            throw new NotImplementedException();
+            return context.Beverages;
         }
 
         public IQueryable<Burger> GetBurgers()
         {
-            throw new NotImplementedException();
+            return context.Burgers;
         }
 
         public IQueryable<Dessert> GetDesserts()
         {
-            throw new NotImplementedException();
+            return context.Desserts;
         }
 
         public IQueryable<Menu> GetMenus()
         {
-            throw new NotImplementedException();
+            return context.Menus;
         }
 
         public IQueryable<Side> GetSides()
         {
-            throw new NotImplementedException();
+            return context.Sides;
         }
     }
 }
