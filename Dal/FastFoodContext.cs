@@ -13,13 +13,20 @@ namespace Dal
         public DbSet<Dessert> Desserts { get; set; }
         public DbSet<Side> Sides { get; set; }
         public DbSet<Menu> Menus { get; set; }
+        public FastFoodContext() : base()
+        {
 
+        }
+        public FastFoodContext(DbContextOptions options) : base (options)
+        {
+
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Data Source=(localdb)\mssqllocaldb;Initial Catalog=FastFood;Integrated Security=true");
             base.OnConfiguring(optionsBuilder);
-        }
+        } 
 
 
     }

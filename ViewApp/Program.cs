@@ -2,6 +2,7 @@
 using Models;
 using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace ViewApp
 {
@@ -9,8 +10,11 @@ namespace ViewApp
     {
         static void Main(string[] args)
         {
-            using (var context = new FastFoodContext())
+            using (var context = new FastFoodContext()
+                )
             {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
                 context.Beverages.AddRange(
                     new List<Beverage>()
                     {
@@ -31,8 +35,8 @@ namespace ViewApp
                            Name="Jus d'orange",
                            Price= 1.80M
                         },
-                    } ); 
-                
+                    } );
+                context.SaveChanges();   
             }
         }
     }
