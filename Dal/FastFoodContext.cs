@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Dal
 {
@@ -26,8 +28,6 @@ namespace Dal
         {
             optionsBuilder.UseSqlServer(@"Data Source=(localdb)\mssqllocaldb;Initial Catalog=FastFood;Integrated Security=true");
             base.OnConfiguring(optionsBuilder);
-        } 
-
-
+        }
     }
 }
