@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using WebFastFood.Models;
+using WebFastFood.Repository;
+using WebFastFood.Repository.IRepositories;
 
 namespace WebFastFood.Controllers
 {
@@ -16,11 +20,17 @@ namespace WebFastFood.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult FastFoodTest([FromServices] IBeverageRepository repository)
+        {
+            return View(repository.GetBeverages().ToList());
         }
 
         public IActionResult Privacy()
