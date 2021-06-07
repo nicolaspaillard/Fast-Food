@@ -9,6 +9,7 @@ namespace Dal
     public class FastFoodContext: DbContext
 
     {
+        public DbSet<Product> Products { get; set; }
         public DbSet<Beverage> Beverages { get; set; }
         public DbSet<Burger> Burgers { get; set; }
         public DbSet<Dessert> Desserts { get; set; }
@@ -30,6 +31,7 @@ namespace Dal
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Product>().ToTable("Products");
             modelBuilder.Entity<Beverage>().ToTable("Beverages");
             modelBuilder.Entity<Burger>().ToTable("Burgers");
             modelBuilder.Entity<Dessert>().ToTable("Desserts");

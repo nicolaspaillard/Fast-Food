@@ -16,7 +16,7 @@ namespace Dal
                 context.Database.EnsureDeleted();
 
             context.Database.EnsureCreated();
-
+            
             //if db has been already seeded
             if (context.Products.Any())
                 return;
