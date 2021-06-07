@@ -11,12 +11,6 @@ namespace WebFastFood.Repository
     public class BeverageRepository : IBeverageRepository
     {
         private FastFoodContext context;
-
-        public BeverageRepository()
-        {
-
-        }
-
         public BeverageRepository(FastFoodContext context) {
             this.context = context;
         }

@@ -16,11 +16,11 @@ namespace WebFastFood.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private IFastFoodRepository _repository;
+        public HomeController(ILogger<HomeController> logger, IFastFoodRepository repository)
         {
             _logger = logger;
-
+            _repository = repository;
         }
 
         public IActionResult Index()
@@ -28,9 +28,9 @@ namespace WebFastFood.Controllers
             return View();
         }
 
-        public IActionResult FastFoodTest([FromServices] IBeverageRepository repository)
+        public IActionResult FastFoodTest()
         {
-            return View(repository.GetBeverages().ToList());
+            return View(_repository.GetBeverages().ToList());
         }
 
         public IActionResult Privacy()
