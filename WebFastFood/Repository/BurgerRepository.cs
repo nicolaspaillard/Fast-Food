@@ -16,7 +16,6 @@ namespace WebFastFood.Repository
         {
             this.context = context;
         }
-
         public void CreateAsync(Burger burger)
         {
             context.Burgers.Add(burger);
