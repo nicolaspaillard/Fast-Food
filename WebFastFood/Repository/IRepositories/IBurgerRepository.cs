@@ -8,10 +8,10 @@ namespace WebFastFood.Repository.IRepositories
 {
     public interface IBurgerRepository
     {
-        public IQueryable<Burger> GetBurgers();
-        public void AddBurger(Burger burger);
-        public void DeleteBurger(int id);
-        public Burger GetBurger(int id);
-        public void EditBurger(Burger burger);
+        public Task<List<Burger>> GetBurgersAsync();
+        public Task<Burger> GetBurgerAsync(int id);
+        public void CreateAsync(Burger newBurger);
+        public void DeleteAsync(Burger burger);
+        public void UpdateAsync(Burger newBurger);
     }
 }
