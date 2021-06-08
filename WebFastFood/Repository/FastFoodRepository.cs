@@ -21,7 +21,11 @@ namespace WebFastFood.Repository
             context.Beverages.Add(beverage);
             context.SaveChanges();
         }
-
+        public void Create(Burger burger)
+        {
+            context.Burgers.Add(burger);
+            context.SaveChanges();
+        }
         public void AddBurger(Burger burger)
         {
             context.Burgers.Add(burger);
@@ -51,7 +55,11 @@ namespace WebFastFood.Repository
             context.Beverages.Remove(beverage);
             context.SaveChanges();
         }
-
+        public void Delete(Burger burger)
+        {
+            context.Burgers.Remove(burger);
+            context.SaveChanges();
+        }
         public void DeleteBurger(Burger burger)
         {
             context.Burgers.Remove(burger);
