@@ -1,4 +1,5 @@
 ﻿using Dal;
+using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -16,33 +17,32 @@ namespace WebFastFood.Repository
             this.context = context;
         }
 
-        public void AddBurger(Burger burger)
+        public void CreateAsync(Burger burger)
         {
             context.Burgers.Add(burger);
-            context.SaveChanges();
+            context.SaveChangesAsync();
         }
-
-        public void DeleteBurger(int id)
+        public void DeleteAsync(Burger burger)
         {
-            var burger = context.Burgers.Find(id);
             context.Burgers.Remove(burger);
-            context.SaveChanges();
+            context.SaveChangesAsync();
         }
-
-        public IQueryable<Burger> GetBurgers()
+        public async Task<List<Burger>> GetBurgersAsync()
         {
-            return context.Burgers;
+            return await context.Burgers.ToListAsync();
         }
-
-        public Burger GetBurger(int id)
+        public async Task<Burger> GetBurgerAsync(int id)
         {
-            return context.Burgers.FirstOrDefault(b => b.Id == id);
+            return await context.Burgers.FindAsync(id);
         }
-
-        public void EditBurger(Burger burger)
+        public void UpdateAsync(Burger newBurger)
         {
-            context.Burgers.Update(burger);
-            context.SaveChanges();
+            context.Burgers.First(b => b.Id == newBurger.Id).Name = newBurger.Name;
+            context.Burgers.First(b => b.Id == newBurger.Id).Description = newBurger.Description;
+            context.Burgers.First(b => b.Id == newBurger.Id).Price = newBurger.Price;
+            context.Burgers.First(b => b.Id == newBurger.Id).Weight = newBurger.Weight;
+            context.Burgers.First(b => b.Id == newBurger.Id).BeefWeight = newBurger.BeefWeight;
+            context.SaveChangesAsync();
         }
     }
 }

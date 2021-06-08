@@ -18,11 +18,6 @@ namespace WebFastFood.Repository
             this.context = context;
         }
 
-        public void CreateAsync(Burger burger)
-        {
-            context.Burgers.Add(burger);
-            context.SaveChangesAsync();
-        }
         public void CreateAsync(Dessert dessert)
         {
             context.Desserts.Add(dessert);
@@ -42,11 +37,7 @@ namespace WebFastFood.Repository
         }
 
 
-        public void DeleteAsync(Burger burger)
-        {
-            context.Burgers.Remove(burger);
-            context.SaveChangesAsync();
-        }
+
         public void DeleteAsync(Dessert dessert)
         {
             context.Desserts.Remove(dessert);
@@ -67,10 +58,6 @@ namespace WebFastFood.Repository
 
 
 
-        public async Task<List<Burger>> GetBurgersAsync()
-        {
-            return await context.Burgers.ToListAsync();
-        }
 
         public async Task<List<Dessert>> GetDessertsAsync()
         {
@@ -88,10 +75,6 @@ namespace WebFastFood.Repository
 
 
 
-        public async Task<Burger> GetBurgerAsync(int id)
-        {
-            return await context.Burgers.FindAsync(id);
-        }
 
         public async Task<Dessert> GetDessertAsync(int id)
         {
@@ -120,15 +103,7 @@ namespace WebFastFood.Repository
         }
 
 
-        public void UpdateAsync(Burger newBurger)
-        {
-            context.Burgers.First(b => b.Id == newBurger.Id).Name = newBurger.Name;
-            context.Burgers.First(b => b.Id == newBurger.Id).Description = newBurger.Description;
-            context.Burgers.First(b => b.Id == newBurger.Id).Price = newBurger.Price;
-            context.Burgers.First(b => b.Id == newBurger.Id).Weight = newBurger.Weight;
-            context.Burgers.First(b => b.Id == newBurger.Id).BeefWeight = newBurger.BeefWeight;
-            context.SaveChangesAsync();
-        }
+
 
         public void UpdateAsync(Dessert newDessert)
         {
