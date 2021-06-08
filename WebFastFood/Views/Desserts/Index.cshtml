@@ -1,19 +1,18 @@
-﻿@model IEnumerable<Models.Burger>
+﻿@model IEnumerable<Models.Dessert>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Burgers</h1>
-
+<h1>Desserts</h1>
 <p>
     <a asp-action="Create">Ajouter Nouveau</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>Masse (g)</th>
-            <th>Masse de la viande (g)</th>
+            <th>Millimeter</th>
+            <th>Glacé</th>
             <th>Nom</th>
             <th>Prix</th>
             <th>Description</th>
@@ -24,10 +23,10 @@
         @foreach (var item in Model) {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Weight)
+                    @Html.DisplayFor(modelItem => item.Millimeter)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.BeefWeight)
+                    @Html.DisplayFor(modelItem => item.IsFrozen)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)

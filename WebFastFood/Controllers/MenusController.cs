@@ -88,7 +88,7 @@ namespace WebFastFood.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,Description")] Menu menu)
+        public async Task<IActionResult> Create([Bind("Id,Name,Price,Description,Burger,Side,Beverage,Dessert")] Menu menu)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +96,7 @@ namespace WebFastFood.Controllers
                 menu.Side = await _sides.GetSideAsync(menu.Side.Id);
                 menu.Beverage = await _beverages.GetBeverageAsync(menu.Beverage.Id);
                 menu.Dessert = await _desserts.GetDessertAsync(menu.Dessert.Id);
-                _repository.CreateAsync(menu);
+                await _repository.CreateAsync(menu);
                 return RedirectToAction(nameof(Index));
             }
             return View(menu);
@@ -203,13 +203,13 @@ namespace WebFastFood.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var menu = await _repository.GetMenuAsync(id);
-            _repository.DeleteAsync(menu);
+            await _repository.DeleteAsync(menu);
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task<bool> MenuExists(int id)
+        private bool MenuExists(int id)
         {
-            return (await _repository.GetMenusAsync()) .Any(m => m.Id == id);
+            return _repository.GetMenusAsync().Result.Any(m => m.Id == id);
         }
     }
 }

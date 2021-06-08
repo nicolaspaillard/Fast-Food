@@ -17,15 +17,15 @@ namespace WebFastFood.Repository
             this.context = context;
         }
 
-        public void CreateAsync(Dessert dessert)
+        public async Task<int> CreateAsync(Dessert dessert)
         {
             context.Desserts.Add(dessert);
-            context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
-        public void DeleteAsync(Dessert dessert)
+        public async Task<int> DeleteAsync(Dessert dessert)
         {
             context.Desserts.Remove(dessert);
-            context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
         public async Task<List<Dessert>> GetDessertsAsync()
         {
@@ -35,14 +35,14 @@ namespace WebFastFood.Repository
         {
             return await context.Desserts.FirstOrDefaultAsync(x => x.Id == id);
         }
-        public void UpdateAsync(Dessert newDessert)
+        public async Task<int> UpdateAsync(Dessert newDessert)
         {
             context.Desserts.First(d => d.Id == newDessert.Id).Name = newDessert.Name;
             context.Desserts.First(d => d.Id == newDessert.Id).Description = newDessert.Description;
             context.Desserts.First(d => d.Id == newDessert.Id).Price = newDessert.Price;
             context.Desserts.First(d => d.Id == newDessert.Id).IsFrozen = newDessert.IsFrozen;
             context.Desserts.First(d => d.Id == newDessert.Id).Millimeter = newDessert.Millimeter;
-            context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
     }
 }

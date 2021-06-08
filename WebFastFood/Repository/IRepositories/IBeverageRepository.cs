@@ -10,8 +10,8 @@ namespace WebFastFood.Repository.IRepositories
     {
         public Task<List<Beverage>> GetBeveragesAsync();
         public Task<Beverage> GetBeverageAsync(int id);
-        public void CreateAsync(Beverage newBeverage);
-        public void DeleteAsync(Beverage beverage);
-        public void UpdateAsync(Beverage newBeverage);
+        public Task<int> CreateAsync(Beverage newBeverage);
+        public Task<int> DeleteAsync(Beverage beverage);
+        public Task<int> UpdateAsync(Beverage newBeverage);
     }
 }

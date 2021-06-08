@@ -12,21 +12,22 @@ using WebFastFood.Repository.IRepositories;
 
 namespace WebFastFood.Controllers
 {
-    public class BeveragesController : Controller
+    public class DessertsController : Controller
     {
-        private readonly ILogger<BeveragesController> _logger;
-        private IBeverageRepository _repository;
-        public BeveragesController(ILogger<BeveragesController> logger, IBeverageRepository repository)
+        private readonly ILogger<DessertsController> _logger;
+        private IDessertRepository _repository;
+        public DessertsController(ILogger<DessertsController> logger, IDessertRepository repository)
         {
             _logger = logger;
             _repository = repository;
         }
-        // GET: Beverages
+        // GET: Desserts
         public async Task<IActionResult> Index()
         {
-            return View(await _repository.GetBeveragesAsync());
+            return View(await _repository.GetDessertsAsync());
         }
-        // GET: Beverages/Details/5
+
+        // GET: Desserts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,55 +35,60 @@ namespace WebFastFood.Controllers
                 return NotFound();
             }
 
-            var beverage = await _repository.GetBeverageAsync((int)id);
-            if (beverage == null)
+            var dessert = await _repository.GetDessertAsync((int)id);
+            if (dessert == null)
             {
                 return NotFound();
             }
 
-            return View(beverage);
+            return View(dessert);
         }
-        // GET: Beverages/Create
+
+        // GET: Desserts/Create
         public IActionResult Create()
         {
             return View();
         }
-        // POST: Beverages/Create
+
+        // POST: Desserts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Millimeter,IsCarbonated,Id,Name,Price,Description")] Beverage beverage)
+        public async Task<IActionResult> Create([Bind("Millimeter,IsFrozen,Id,Name,Price,Description")] Dessert dessert)
         {
             if (ModelState.IsValid)
             {
-               _repository.CreateAsync(beverage);
+                _repository.CreateAsync(dessert);
                 return RedirectToAction(nameof(Index));
             }
-            return View(beverage);
+            return View(dessert);
         }
-        // GET: Beverages/Edit/5
+
+        // GET: Desserts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var beverage = await _repository.GetBeverageAsync((int)id);
-            if (beverage == null)
+
+            var dessert = await _repository.GetDessertAsync((int)id);
+            if (dessert == null)
             {
                 return NotFound();
             }
-            return View(beverage);
+            return View(dessert);
         }
-        // POST: Beverages/Edit/5
+
+        // POST: Desserts/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Millimeter,IsCarbonated,Id,Name,Price,Description")] Beverage beverage)
+        public async Task<IActionResult> Edit(int id, [Bind("Millimeter,IsFrozen,Id,Name,Price,Description")] Dessert dessert)
         {
-            if (id != beverage.Id)
+            if (id != dessert.Id)
             {
                 return NotFound();
             }
@@ -91,11 +97,11 @@ namespace WebFastFood.Controllers
             {
                 try
                 {
-                    _repository.UpdateAsync(beverage);
+                    _repository.UpdateAsync(dessert);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!await BeverageExists(beverage.Id))
+                    if (!await DessertExists(dessert.Id))
                     {
                         return NotFound();
                     }
@@ -106,9 +112,10 @@ namespace WebFastFood.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(beverage);
+            return View(dessert);
         }
-        // GET: Beverages/Delete/5
+
+        // GET: Desserts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -116,26 +123,28 @@ namespace WebFastFood.Controllers
                 return NotFound();
             }
 
-            var beverage = await _repository.GetBeverageAsync((int)id);
-            if (beverage == null)
+            var dessert = await _repository.GetDessertAsync((int)id);
+            if (dessert == null)
             {
                 return NotFound();
             }
 
-            return View(beverage);
+            return View(dessert);
         }
-        // POST: Beverages/Delete/5
+
+        // POST: Desserts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var beverage = await _repository.GetBeverageAsync(id);
-            await _repository.DeleteAsync(beverage);
+            var dessert = await _repository.GetDessertAsync(id);
+            await _repository.DeleteAsync(dessert);
             return RedirectToAction(nameof(Index));
         }
-        private bool BeverageExists(int id)
+
+        private bool DessertExists(int id)
         {
-            return _repository.GetBeveragesAsync().Result.Any(e => e.Id == id);
+            return _repository.GetDessertsAsync().Result.Any(e => e.Id == id);
         }
     }
 }

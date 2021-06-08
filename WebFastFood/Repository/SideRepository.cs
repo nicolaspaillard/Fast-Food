@@ -16,15 +16,15 @@ namespace WebFastFood.Repository
         {
             this.context = context;
         }
-        public void CreateAsync(Side side)
+        public async Task<int> CreateAsync(Side side)
         {
             context.Sides.Add(side);
-            context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
-        public void DeleteAsync(Side side)
+        public async Task<int> DeleteAsync(Side side)
         {
             context.Sides.Remove(side);
-            context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
         public async Task<List<Side>> GetSidesAsync()
         {
@@ -34,14 +34,14 @@ namespace WebFastFood.Repository
         {
             return await context.Sides.FirstOrDefaultAsync(x => x.Id == id);
         }
-        public void UpdateAsync(Side newSide)
+        public async Task<int> UpdateAsync(Side newSide)
         {
             context.Sides.First(s => s.Id == newSide.Id).Name = newSide.Name;
             context.Sides.First(s => s.Id == newSide.Id).Description = newSide.Description;
             context.Sides.First(s => s.Id == newSide.Id).Price = newSide.Price;
             context.Sides.First(s => s.Id == newSide.Id).Weight = newSide.Weight;
             context.Sides.First(s => s.Id == newSide.Id).SaltWeight = newSide.SaltWeight;
-            context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
     }
 }

@@ -102,7 +102,7 @@ namespace WebFastFood.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SideExists(side.Id))
+                    if (!await SideExists(side.Id))
                     {
                         return NotFound();
                     }
@@ -139,13 +139,13 @@ namespace WebFastFood.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var side = await _repository.GetSideAsync(id);
-            _repository.DeleteAsync(side);
+            await _repository.DeleteAsync(side);
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task<bool> SideExists(int id)
+        private bool SideExists(int id)
         {
-            return (await _repository.GetSidesAsync()).Any(e => e.Id == id);
+            return _repository.GetSidesAsync().Result.Any(e => e.Id == id);
         }
     }
 }

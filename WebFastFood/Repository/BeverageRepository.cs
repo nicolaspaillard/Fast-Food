@@ -15,15 +15,15 @@ namespace WebFastFood.Repository
         public BeverageRepository(FastFoodContext context) {
             this.context = context;
         }
-        public void CreateAsync(Beverage beverage)
+        public async Task<int> CreateAsync(Beverage beverage)
         {
             context.Beverages.Add(beverage);
-            context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
-        public void DeleteAsync(Beverage beverage)
+        public async Task<int> DeleteAsync(Beverage beverage)
         {
             context.Beverages.Remove(beverage);
-            context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
 
 
@@ -35,14 +35,14 @@ namespace WebFastFood.Repository
         {
             return await context.Beverages.FirstOrDefaultAsync(x => x.Id == id);
         }
-        public void UpdateAsync(Beverage newBeverage)
+        public async Task<int> UpdateAsync(Beverage newBeverage)
         {
             context.Beverages.First(b => b.Id == newBeverage.Id).Name = newBeverage.Name;
             context.Beverages.First(b => b.Id == newBeverage.Id).Description = newBeverage.Description;
             context.Beverages.First(b => b.Id == newBeverage.Id).Price = newBeverage.Price;
             context.Beverages.First(b => b.Id == newBeverage.Id).IsCarbonated = newBeverage.IsCarbonated;
             context.Beverages.First(b => b.Id == newBeverage.Id).Millimeter = newBeverage.Millimeter;
-            context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
     }
 }
