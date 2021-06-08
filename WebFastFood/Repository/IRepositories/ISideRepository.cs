@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebFastFood.Repository.IRepositories
 {
-    interface ISideRepository
+    public interface ISideRepository
     {
         public Task<List<Side>> GetSidesAsync();
         public Task<Side> GetSideAsync(int id);

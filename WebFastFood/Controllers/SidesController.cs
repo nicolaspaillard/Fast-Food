@@ -15,8 +15,8 @@ namespace WebFastFood.Controllers
     public class SidesController : Controller
     {
         private readonly ILogger<SidesController> _logger;
-        private IFastFoodRepository _repository;
-        public SidesController(ILogger<SidesController> logger, IFastFoodRepository repository)
+        ISideRepository _repository;
+        public SidesController(ILogger<SidesController> logger, ISideRepository repository)
         {
             _logger = logger;
             _repository = repository;
