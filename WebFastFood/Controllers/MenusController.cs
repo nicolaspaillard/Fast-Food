@@ -21,19 +21,19 @@ namespace WebFastFood.Controllers
             _repository = repository;
         }
         // GET: MenuController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_repository.GetMenus().ToList());
+            return View(await _repository.GetMenusAsync());
         }
 
         // GET: MenuController/Details/5
-        public ActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var menu = _repository.GetMenu((int)id);
+            var menu = await _repository.GetMenuAsync((int)id);
             if (menu == null)
             {
                 return NotFound();
@@ -43,27 +43,27 @@ namespace WebFastFood.Controllers
         }
 
         // GET: MenuController/Create
-        public ActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["Burgers"] = _repository.GetBurgers().Select(x =>
+            ViewData["Burgers"] = _repository.GetBurgersAsync().Result.Select(x =>
                                   new SelectListItem()
                                   {
                                       Text = x.Name,
                                       Value = x.Id.ToString()
                                   }).ToList();
-            ViewData["Sides"] = _repository.GetSides().Select(x =>
+            ViewData["Sides"] = _repository.GetSidesAsync().Result.Select(x =>
                                   new SelectListItem()
                                   {
                                       Text = x.Name,
                                       Value = x.Id.ToString()
                                   }).ToList();
-            ViewData["Beverages"] = _repository.GetBeverages().Select(x =>
+            ViewData["Beverages"] = _repository.GetBeveragesAsync().Result.Select(x =>
                                   new SelectListItem()
                                   {
                                       Text = x.Name,
                                       Value = x.Id.ToString()
                                   }).ToList();
-            ViewData["Desserts"] = _repository.GetDesserts().Select(x =>
+            ViewData["Desserts"] = _repository.GetDessertsAsync().Result.Select(x =>
                                   new SelectListItem()
                                   {
                                       Text = x.Name,
@@ -75,15 +75,15 @@ namespace WebFastFood.Controllers
         // POST: MenuController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Menu menu)
+        public async Task<IActionResult> Create(Menu menu)
         {
             try
-            {
-                menu.Burger = _repository.GetBurgers().First(b => b.Id == menu.Burger.Id);
-                menu.Side = _repository.GetSides().First(s => s.Id == menu.Side.Id);
-                menu.Beverage = _repository.GetBeverages().First(s => s.Id == menu.Beverage.Id);
-                menu.Dessert = _repository.GetDesserts().First(s => s.Id == menu.Dessert.Id);
-                _repository.Create(menu);
+            { 
+                menu.Burger = _repository.GetBurgerAsync(menu.Burger.Id).Result;
+                menu.Side = _repository.GetSideAsync(menu.Side.Id).Result;
+                menu.Beverage = _repository.GetBeverageAsync(menu.Beverage.Id).Result;
+                menu.Dessert = _repository.GetDessertAsync(menu.Dessert.Id).Result;
+                _repository.CreateAsync(menu);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -93,27 +93,27 @@ namespace WebFastFood.Controllers
         }
 
         // GET: MenuController/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            ViewData["Burgers"] = _repository.GetBurgers().Select(x =>
+            ViewData["Burgers"] = _repository.GetBurgersAsync().Result.Select(x =>
                                   new SelectListItem()
                                   {
                                       Text = x.Name,
                                       Value = x.Id.ToString()
                                   }).ToList();
-            ViewData["Sides"] = _repository.GetSides().Select(x =>
+            ViewData["Sides"] = _repository.GetSidesAsync().Result.Select(x =>
                                   new SelectListItem()
                                   {
                                       Text = x.Name,
                                       Value = x.Id.ToString()
                                   }).ToList();
-            ViewData["Beverages"] = _repository.GetBeverages().Select(x =>
+            ViewData["Beverages"] = _repository.GetBeveragesAsync().Result.Select(x =>
                                   new SelectListItem()
                                   {
                                       Text = x.Name,
                                       Value = x.Id.ToString()
                                   }).ToList();
-            ViewData["Desserts"] = _repository.GetDesserts().Select(x =>
+            ViewData["Desserts"] = _repository.GetDessertsAsync().Result.Select(x =>
                                   new SelectListItem()
                                   {
                                       Text = x.Name,
@@ -124,7 +124,7 @@ namespace WebFastFood.Controllers
                 return NotFound();
             }
 
-            var menu = _repository.GetMenu((int)id);
+            var menu = _repository.GetMenuAsync((int)id);
             if (menu == null)
             {
                 return NotFound();
@@ -135,41 +135,41 @@ namespace WebFastFood.Controllers
         // POST: MenuController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Menu menu)
+        public async Task<IActionResult> Edit(Menu menu)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    menu.Burger = _repository.GetBurger(menu.Burger.Id);
-                    menu.Side = _repository.GetSide(menu.Side.Id);
-                    menu.Beverage = _repository.GetBeverage(menu.Beverage.Id);
-                    menu.Dessert = _repository.GetDessert(menu.Dessert.Id);
-                    _repository.Update(menu);
+                    menu.Burger = _repository.GetBurgerAsync(menu.Burger.Id).Result;
+                    menu.Side = _repository.GetSideAsync(menu.Side.Id).Result;
+                    menu.Beverage = _repository.GetBeverageAsync(menu.Beverage.Id).Result;
+                    menu.Dessert = _repository.GetDessertAsync(menu.Dessert.Id).Result;
+                    _repository.UpdateAsync(menu);
                     return RedirectToAction(nameof(Index));
                 }
                 catch
                 {
-                    return View(_repository.GetMenu(menu.Id));
+                    return View(_repository.GetMenuAsync(menu.Id));
                 }
             }
-            return View(_repository.GetMenu(menu.Id));
+            return View(_repository.GetMenuAsync(menu.Id));
         }
 
         // GET: MenuController/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var menu = _repository.GetMenu((int)id);
+            var menu = _repository.GetMenuAsync((int)id).Result;
             if (menu == null)
             {
                 return NotFound();
             }
-            _repository.Delete(menu);
+            _repository.DeleteAsync(menu);
             return RedirectToAction(nameof(Index));
         }
     }

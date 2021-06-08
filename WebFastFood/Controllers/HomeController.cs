@@ -27,13 +27,6 @@ namespace WebFastFood.Controllers
         {
             return View();
         }
-
-        public IActionResult FastFoodTest()
-        {
-            var l = _repository.GetBeverages().ToList();
-            return View(l);
-        }
-
         public IActionResult Privacy()
         {
             return View();

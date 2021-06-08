@@ -22,13 +22,13 @@ namespace WebFastFood.Controllers
             _repository = repository;
         }
 
-        // GET: GetSides()
+        // GET: Sides
         public async Task<IActionResult> Index()
         {
-            return View(await _repository.GetSides().ToListAsync());
+            return View(await _repository.GetSidesAsync());
         }
 
-        // GET: GetSides()/Details/5
+        // GET: Sides/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,7 +36,95 @@ namespace WebFastFood.Controllers
                 return NotFound();
             }
 
-            var side = await _repository.GetSides()
+            var side = await _repository.GetSideAsync((int)id);
+            if (side == null)
+            {
+                return NotFound();
+            }
+
+            return View(side);
+        }
+
+        // GET: Sides/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Sides/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Weight,SaltWeight,Id,Name,Price,Description")] Side side)
+        {
+            if (ModelState.IsValid)
+            {
+                _repository.CreateAsync(side);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(side);
+        }
+
+        // GET: Sides/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var side = await _repository.GetSideAsync((int)id);
+            if (side == null)
+            {
+                return NotFound();
+            }
+            return View(side);
+        }
+
+        // POST: Sides/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Weight,SaltWeight,Id,Name,Price,Description")] Side side)
+        {
+            if (id != side.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _repository.UpdateAsync(side);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!SideExists(side.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(side);
+        }
+
+        // GET: Sides/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var side = await _context.Sides
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (side == null)
             {
@@ -46,81 +134,20 @@ namespace WebFastFood.Controllers
             return View(side);
         }
 
-        // GET: GetSides()/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: GetSides()/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        // POST: Sides/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Side side)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (ModelState.IsValid)
-            {
-                _repository.Create(side);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(side);
-        }
-
-        // GET: GetSides()/Edit/5
-        public IActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var side = _repository.GetSide((int)id);
-            if (side == null)
-            {
-                return NotFound();
-            }
-            return View(side);
-        }
-
-        // POST: GetSides()/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(Side side)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _repository.Update(side);
-                    return RedirectToAction(nameof(Index));
-                }
-                catch
-                {
-                    return View(_repository.GetSide(side.Id));
-                }
-
-            }
-            return View(_repository.GetSide(side.Id));
-        }
-
-        // GET: GetSides()/Delete/5
-        public IActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var side = _repository.GetSide((int)id);
-            if (side == null)
-            {
-                return NotFound();
-            }
-            _repository.Delete(side);
+            var side = await _context.Sides.FindAsync(id);
+            _context.Sides.Remove(side);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        private bool SideExists(int id)
+        {
+            return _context.Sides.Any(e => e.Id == id);
         }
     }
 }
