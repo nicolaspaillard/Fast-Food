@@ -25,7 +25,7 @@ namespace WebFastFood.Controllers
         // GET: Beverages
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Beverages.ToListAsync());
+            return View(await _repository.GetBeveragesAsync());
         }
 
         // GET: Beverages/Details/5
@@ -36,8 +36,7 @@ namespace WebFastFood.Controllers
                 return NotFound();
             }
 
-            var beverage = await _context.Beverages
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var beverage = await _repository.GetBeverageAsync((int)id);
             if (beverage == null)
             {
                 return NotFound();
@@ -61,8 +60,7 @@ namespace WebFastFood.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(beverage);
-                await _context.SaveChangesAsync();
+                _repository.CreateAsync(beverage);
                 return RedirectToAction(nameof(Index));
             }
             return View(beverage);
@@ -76,7 +74,7 @@ namespace WebFastFood.Controllers
                 return NotFound();
             }
 
-            var beverage = await _context.Beverages.FindAsync(id);
+            var beverage = await _repository.GetBeverageAsync((int)id);
             if (beverage == null)
             {
                 return NotFound();
@@ -100,8 +98,8 @@ namespace WebFastFood.Controllers
             {
                 try
                 {
-                    _context.Update(beverage);
-                    await _context.SaveChangesAsync();
+                    _repository.UpdateAsync(beverage);
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -127,8 +125,7 @@ namespace WebFastFood.Controllers
                 return NotFound();
             }
 
-            var beverage = await _context.Beverages
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var beverage = await _repository.GetBeverageAsync((int)id);
             if (beverage == null)
             {
                 return NotFound();
@@ -142,15 +139,14 @@ namespace WebFastFood.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var beverage = await _context.Beverages.FindAsync(id);
-            _context.Beverages.Remove(beverage);
-            await _context.SaveChangesAsync();
+            var beverage = await _repository.GetBeverageAsync((int)id);
+            _repository.DeleteAsync(beverage);
             return RedirectToAction(nameof(Index));
         }
 
         private bool BeverageExists(int id)
         {
-            return _context.Beverages.Any(e => e.Id == id);
+            return _repository.GetBeveragesAsync().Result.Any(e => e.Id == id);
         }
     }
 }

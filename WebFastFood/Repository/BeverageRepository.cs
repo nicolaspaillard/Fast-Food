@@ -25,6 +25,8 @@ namespace WebFastFood.Repository
             context.Beverages.Remove(beverage);
             context.SaveChangesAsync();
         }
+
+
         public async Task<List<Beverage>> GetBeveragesAsync()
         {
             return await context.Beverages.ToListAsync();
