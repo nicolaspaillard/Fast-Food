@@ -95,7 +95,7 @@ namespace WebFastFood.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!await BeverageExists(beverage.Id))
+                    if (!BeverageExists(beverage.Id))
                     {
                         return NotFound();
                     }
