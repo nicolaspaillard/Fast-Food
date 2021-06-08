@@ -22,7 +22,7 @@ namespace WebFastFood.Repository
             context.SaveChanges();
         }
 
-        public void Create(Burger burger)
+        public void AddBurger(Burger burger)
         {
             context.Burgers.Add(burger);
             context.SaveChanges();
@@ -52,7 +52,7 @@ namespace WebFastFood.Repository
             context.SaveChanges();
         }
 
-        public void Delete(Burger burger)
+        public void DeleteBurger(Burger burger)
         {
             context.Burgers.Remove(burger);
             context.SaveChanges();
@@ -81,10 +81,10 @@ namespace WebFastFood.Repository
             return context.Beverages;
         }
 
-        public IQueryable<Burger> GetBurgers()
-        {
-            return context.Burgers;
-        }
+        //public IQueryable<Burger> GetBurgers()
+        //{
+        //    return context.Burgers;
+        //}
 
         public IQueryable<Dessert> GetDesserts()
         {

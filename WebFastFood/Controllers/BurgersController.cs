@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,27 +10,25 @@ using WebFastFood.Repository.IRepositories;
 
 namespace WebFastFood.Controllers
 {
-    public class BurgerController : Controller
+    public class BurgersController : Controller
     {
-        private readonly ILogger<BurgerController> _logger;
-        private IFastFoodRepository _repository;
-
-        public BurgerController(ILogger<BurgerController> logger, IFastFoodRepository repository)
+        private readonly ILogger<BurgersController> _logger;
+        private IBurgerRepository _repository;
+        public BurgersController(ILogger<BurgersController> logger, IBurgerRepository repository)
         {
             _logger = logger;
             _repository = repository;
         }
-
         // GET: BurgerController
         public ActionResult Index()
         {
-            return View();
+            return View(_repository.GetBurgers());
         }
 
         // GET: BurgerController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View(_repository.GetBurger(id));
         }
 
         // GET: BurgerController/Create
@@ -41,11 +40,16 @@ namespace WebFastFood.Controllers
         // POST: BurgerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Burger burger)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _repository.AddBurger(burger);
+                    return RedirectToAction(nameof(Index));
+                }
+                return View();
             }
             catch
             {
@@ -62,10 +66,15 @@ namespace WebFastFood.Controllers
         // POST: BurgerController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Burger burger)
         {
             try
             {
+                if (ModelState.IsValid)
+                {
+                    _repository.EditBurger(id, burger);
+                    return RedirectToAction(nameof(Index));
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -75,8 +84,9 @@ namespace WebFastFood.Controllers
         }
 
         // GET: BurgerController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Burger burger)
         {
+            _repository.DeleteBurger(burger);
             return View();
         }
 
