@@ -20,19 +20,19 @@ namespace WebFastFood.Controllers
             _repository = repository;
         }
         // GET: BurgerController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_repository.GetBurgers());
+            return View(await _repository.GetBurgersAsync());
         }
 
         // GET: BurgerController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View(_repository.GetBurger(id));
+            return View(await _repository.GetBurgerAsync(id));
         }
 
         // GET: BurgerController/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -40,13 +40,13 @@ namespace WebFastFood.Controllers
         // POST: BurgerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Burger burger)
+        public async Task<IActionResult> Create(Burger burger)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _repository.AddBurger(burger);
+                    _repository.CreateAsync(burger);
                     return RedirectToAction(nameof(Index));
                 }
                 return View();
@@ -58,22 +58,22 @@ namespace WebFastFood.Controllers
         }
 
         // GET: BurgerController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var burger = _repository.GetBurger(id);
+            var burger = await _repository.GetBurgerAsync((int)id);
             return View(burger);
         }
 
         // POST: BurgerController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Burger burger)
+        public async Task<IActionResult> Edit(int id, Burger burger)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _repository.EditBurger(burger);
+                    _repository.UpdateAsync(burger);
                 }
                 catch
                 {
@@ -92,12 +92,12 @@ namespace WebFastFood.Controllers
         // POST: BurgerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                var burger = _repository.GetBurger(id);
-                _repository.DeleteBurger(id);
+                var burger = await _repository.GetBurgerAsync(id);
+                _repository.DeleteAsync(burger);
                 return RedirectToAction(nameof(Index));
             }
             catch
