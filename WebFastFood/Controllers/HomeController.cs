@@ -16,11 +16,9 @@ namespace WebFastFood.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private IFastFoodRepository _repository;
-        public HomeController(ILogger<HomeController> logger, IFastFoodRepository repository)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _repository = repository;
         }
 
         public IActionResult Index()

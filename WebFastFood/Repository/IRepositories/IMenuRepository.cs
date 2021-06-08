@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebFastFood.Repository.IRepositories
 {
-    interface IMenuRepository
+    public interface IMenuRepository
     {
         public Task<List<Menu>> GetMenusAsync();
         public Task<Menu> GetMenuAsync(int id);

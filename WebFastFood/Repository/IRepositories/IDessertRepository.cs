@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebFastFood.Repository.IRepositories
 {
-    interface IDessertRepository
+    public interface IDessertRepository
     {
         public Task<List<Dessert>> GetDessertsAsync();
         public Task<Dessert> GetDessertAsync(int id);

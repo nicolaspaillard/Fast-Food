@@ -11,11 +11,11 @@ using WebFastFood.Repository.IRepositories;
 
 namespace WebFastFood.Controllers
 {
-    public class MenusController : Controller
+    public class MenusController_bkp : Controller
     {
-        private readonly ILogger<MenusController> _logger;
+        private readonly ILogger<MenusController_bkp> _logger;
         private IFastFoodRepository _repository;
-        public MenusController(ILogger<MenusController> logger, IFastFoodRepository repository)
+        public MenusController_bkp(ILogger<MenusController_bkp> logger, IFastFoodRepository repository)
         {
             _logger = logger;
             _repository = repository;
