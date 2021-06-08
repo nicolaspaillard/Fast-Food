@@ -10,8 +10,8 @@ namespace WebFastFood.Repository.IRepositories
     {
         public IQueryable<Burger> GetBurgers();
         public void AddBurger(Burger burger);
-        public void DeleteBurger(Burger burger);
+        public void DeleteBurger(int id);
         public Burger GetBurger(int id);
-        public void EditBurger(int id, Burger burger);
+        public void EditBurger(Burger burger);
     }
 }
