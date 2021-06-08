@@ -22,10 +22,11 @@ namespace WebFastFood.Repository
             context.SaveChanges();
         }
 
-        //public void AddBurger(Burger burger)
-        //{
-        //    context.Burgers.Add(burger);
-        //}
+        public void AddBurger(Burger newBurger)
+        {
+            context.Burgers.Add(newBurger);
+            context.SaveChanges();
+        }
 
         public void AddDessert(Dessert dessert)
         {
@@ -51,10 +52,10 @@ namespace WebFastFood.Repository
             context.SaveChanges();
         }
 
-        //public void DeleteBurger(Burger burger)
-        //{
-        //    context.Burgers.Remove(burger);
-        //}
+        public void DeleteBurger(Burger burger)
+        {
+            context.Burgers.Remove(burger);
+        }
 
         public void DeleteDessert(Dessert dessert)
         {
@@ -79,10 +80,10 @@ namespace WebFastFood.Repository
             return context.Beverages;
         }
 
-        //public IQueryable<Burger> GetBurgers()
-        //{
-        //    return context.Burgers;
-        //}
+        public IQueryable<Burger> GetBurgers()
+        {
+            return context.Burgers;
+        }
 
         public IQueryable<Dessert> GetDesserts()
         {
@@ -149,5 +150,7 @@ namespace WebFastFood.Repository
             context.Sides.First(s => s.Id == id).SaltWeight = newSide.SaltWeight;
             context.SaveChanges();
         }
+
+
     }
 }

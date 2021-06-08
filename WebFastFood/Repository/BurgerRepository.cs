@@ -22,8 +22,9 @@ namespace WebFastFood.Repository
             context.SaveChanges();
         }
 
-        public void DeleteBurger(Burger burger)
+        public void DeleteBurger(int id)
         {
+            var burger = context.Burgers.Find(id);
             context.Burgers.Remove(burger);
             context.SaveChanges();
         }
@@ -38,14 +39,10 @@ namespace WebFastFood.Repository
             return context.Burgers.FirstOrDefault(b => b.Id == id);
         }
 
-        public void EditBurger(int id, Burger burger)
+        public void EditBurger(Burger burger)
         {
-            var burgerBDD = GetBurger(id);
-            burgerBDD.BeefWeight = burger.BeefWeight;
-            burgerBDD.Description = burger.Description;
-            burgerBDD.Name = burger.Name;
-            burgerBDD.Price = burger.Price;
-            burgerBDD.Weight = burger.Weight;
+            context.Burgers.Update(burger);
+            context.SaveChanges();
         }
     }
 }

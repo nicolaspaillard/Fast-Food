@@ -60,7 +60,8 @@ namespace WebFastFood.Controllers
         // GET: BurgerController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var burger = _repository.GetBurger(id);
+            return View(burger);
         }
 
         // POST: BurgerController/Edit/5
@@ -68,35 +69,35 @@ namespace WebFastFood.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Burger burger)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
-                    _repository.EditBurger(id, burger);
-                    return RedirectToAction(nameof(Index));
+                    _repository.EditBurger(burger);
                 }
-                return RedirectToAction(nameof(Index));
+                catch
+                {
+                    return View();
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: BurgerController/Delete/5
         public ActionResult Delete(Burger burger)
         {
-            _repository.DeleteBurger(burger);
             return View();
         }
 
         // POST: BurgerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
             try
             {
+                var burger = _repository.GetBurger(id);
+                _repository.DeleteBurger(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
