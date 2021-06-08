@@ -19,51 +19,61 @@ namespace WebFastFood.Repository
         public void AddBeverage(Beverage beverage)
         {
             context.Beverages.Add(beverage);
+            context.SaveChanges();
         }
 
         public void AddBurger(Burger burger)
         {
             context.Burgers.Add(burger);
+            context.SaveChanges();
         }
 
         public void AddDessert(Dessert dessert)
         {
             context.Desserts.Add(dessert);
+            context.SaveChanges();
         }
 
         public void AddMenu(Menu menu)
         {
             context.Menus.Add(menu);
+            context.SaveChanges();
         }
 
         public void AddSide(Side side)
         {
             context.Sides.Add(side);
+            context.SaveChanges();
         }
 
         public void DeleteBeverage(Beverage beverage)
         {
             context.Beverages.Remove(beverage);
+            context.SaveChanges();
         }
 
         public void DeleteBurger(Burger burger)
         {
             context.Burgers.Remove(burger);
+            context.SaveChanges();
         }
 
         public void DeleteDessert(Dessert dessert)
         {
             context.Desserts.Remove(dessert);
+            context.SaveChanges();
         }
 
         public void DeleteMenu(Menu menu)
         {
             context.Menus.Remove(menu);
+            context.SaveChanges();
         }
 
         public void DeleteSide(Side side)
         {
             context.Sides.Remove(side);
+            context.SaveChanges();
         }
 
         public IQueryable<Beverage> GetBeverages()
@@ -99,6 +109,7 @@ namespace WebFastFood.Repository
             context.Menus.First(m => m.Id == id).Side = newMenu.Side;
             context.Menus.First(m => m.Id == id).Beverage = newMenu.Beverage;
             context.Menus.First(m => m.Id == id).Dessert = newMenu.Dessert;
+            context.SaveChanges();
         }
 
         public void EditBeverage(int id, Beverage newBeverage)
@@ -108,6 +119,7 @@ namespace WebFastFood.Repository
             context.Beverages.First(b => b.Id == id).Price = newBeverage.Price;
             context.Beverages.First(b => b.Id == id).IsCarbonated = newBeverage.IsCarbonated;
             context.Beverages.First(b => b.Id == id).Millimeter = newBeverage.Millimeter;
+            context.SaveChanges();
         }
 
         public void EditBurger(int id, Burger newBurger)
@@ -117,6 +129,7 @@ namespace WebFastFood.Repository
             context.Burgers.First(b => b.Id == id).Price = newBurger.Price;
             context.Burgers.First(b => b.Id == id).Weight = newBurger.Weight;
             context.Burgers.First(b => b.Id == id).BeefWeight = newBurger.BeefWeight;
+            context.SaveChanges();
         }
 
         public void EditDessert(int id, Dessert newDessert)
@@ -126,6 +139,7 @@ namespace WebFastFood.Repository
             context.Desserts.First(d => d.Id == id).Price = newDessert.Price;
             context.Desserts.First(d => d.Id == id).IsFrozen = newDessert.IsFrozen;
             context.Desserts.First(d => d.Id == id).Millimeter = newDessert.Millimeter;
+            context.SaveChanges();
         }
 
         public void EditSide(int id, Side newSide)
@@ -135,6 +149,7 @@ namespace WebFastFood.Repository
             context.Sides.First(s => s.Id == id).Price = newSide.Price;
             context.Sides.First(s => s.Id == id).Weight = newSide.Weight;
             context.Sides.First(s => s.Id == id).SaltWeight = newSide.SaltWeight;
+            context.SaveChanges();
         }
     }
 }
