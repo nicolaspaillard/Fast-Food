@@ -124,8 +124,7 @@ namespace WebFastFood.Controllers
                 return NotFound();
             }
 
-            var side = await _context.Sides
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var side = await _repository.GetSideAsync((int)id);
             if (side == null)
             {
                 return NotFound();
@@ -134,20 +133,9 @@ namespace WebFastFood.Controllers
             return View(side);
         }
 
-        // POST: Sides/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var side = await _context.Sides.FindAsync(id);
-            _context.Sides.Remove(side);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
         private bool SideExists(int id)
         {
-            return _context.Sides.Any(e => e.Id == id);
+            return _repository.GetSidesAsync().Result.Any(e => e.Id == id);
         }
     }
 }

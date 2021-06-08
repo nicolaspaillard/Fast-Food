@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Dal;
 using Models;
+using Microsoft.Extensions.Logging;
+using WebFastFood.Repository.IRepositories;
 
 namespace WebFastFood.Controllers
 {
     public class BeveragesController : Controller
     {
-        private readonly FastFoodContext _context;
-
-        public BeveragesController(FastFoodContext context)
+        private readonly ILogger<BeveragesController> _logger;
+        private IBeverageRepository _repository;
+        public BeveragesController(ILogger<BeveragesController> logger, IBeverageRepository repository)
         {
-            _context = context;
+            _logger = logger;
+            _repository = repository;
         }
 
         // GET: Beverages

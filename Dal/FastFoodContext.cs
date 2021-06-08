@@ -28,7 +28,7 @@ namespace Dal
         {
             //optionsBuilder.UseSqlServer(@"Data Source=(localdb)\mssqllocaldb;Initial Catalog=FastFood;Integrated Security=true");
             base.OnConfiguring(optionsBuilder);
-        }
+        }   
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().ToTable("Products");
