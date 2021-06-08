@@ -81,10 +81,10 @@ namespace WebFastFood.Repository
             return context.Beverages;
         }
 
-        //public IQueryable<Burger> GetBurgers()
-        //{
-        //    return context.Burgers;
-        //}
+        public IQueryable<Burger> GetBurgers()
+        {
+            return context.Burgers;
+        }
 
         public IQueryable<Dessert> GetDesserts()
         {
