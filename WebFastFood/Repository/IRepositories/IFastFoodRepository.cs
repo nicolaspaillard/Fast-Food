@@ -8,30 +8,30 @@ namespace WebFastFood.Repository.IRepositories
 {
     public interface IFastFoodRepository
     {
-        public IQueryable<Beverage> GetBeverages();
-        public Beverage GetBeverage(int id);
-        public void Create(Beverage newBeverage);
-        public void Delete(Beverage beverage);
-        public void Update(Beverage newBeverage);
-        public IQueryable<Burger> GetBurgers();
-        public Burger GetBurger(int id);
-        public void Create(Burger newBurger);
-        public void Delete(Burger burger);
-        public void Update(Burger newBurger);
-        public IQueryable<Dessert> GetDesserts();
-        public Dessert GetDessert(int id);
-        public void Create(Dessert newDessert);
-        public void Delete(Dessert dessert);
-        public void Update(Dessert newDessert);
-        public IQueryable<Side> GetSides();
-        public Side GetSide(int id);
-        public void Create(Side newSide);
-        public void Delete(Side side);
-        public void Update(Side newSide);
-        public IQueryable<Menu> GetMenus();
-        public Menu GetMenu(int id);
-        public void Create(Menu newMenu);
-        public void Delete(Menu menu);
-        public void Update(Menu newMenu);
+        public Task<List<Beverage>> GetBeveragesAsync();
+        public Task<Beverage> GetBeverageAsync(int id);
+        public void CreateAsync(Beverage newBeverage);
+        public void DeleteAsync(Beverage beverage);
+        public void UpdateAsync(Beverage newBeverage);
+        public Task<List<Burger>> GetBurgersAsync();
+        public Task<Burger> GetBurgerAsync(int id);
+        public void CreateAsync(Burger newBurger);
+        public void DeleteAsync(Burger burger);
+        public void UpdateAsync(Burger newBurger);
+        public Task<List<Dessert>> GetDessertsAsync();
+        public Task<Dessert> GetDessertAsync(int id);
+        public void CreateAsync(Dessert newDessert);
+        public void DeleteAsync(Dessert dessert);
+        public void UpdateAsync(Dessert newDessert);
+        public Task<List<Side>> GetSidesAsync();
+        public Task<Side> GetSideAsync(int id);
+        public void CreateAsync(Side newSide);
+        public void DeleteAsync(Side side);
+        public void UpdateAsync(Side newSide);
+        public Task<List<Menu>> GetMenusAsync();
+        public Task<Menu> GetMenuAsync(int id);
+        public void CreateAsync(Menu newMenu);
+        public void DeleteAsync(Menu menu);
+        public void UpdateAsync(Menu newMenu);
     }
 }
