@@ -27,8 +27,9 @@ namespace WebFastFood
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           //services.AddScoped<IBeverageRepository, BeverageRepository>();
+            //services.AddScoped<IBeverageRepository, BeverageRepository>();
             services.AddScoped<IFastFoodRepository, FastFoodRepository>();
+            services.AddScoped<IBurgerRepository, BurgerRepository>();
             services.AddDbContext<FastFoodContext>(options =>
                      options.UseSqlServer(Configuration.GetConnectionString("FastFoodDb"))
                      );

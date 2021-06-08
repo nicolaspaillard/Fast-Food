@@ -11,9 +11,9 @@ namespace WebFastFood.Repository.IRepositories
         public IQueryable<Beverage> GetBeverages();
         public void AddBeverage(Beverage beverage);
         public void DeleteBeverage(Beverage beverage);
-        public IQueryable<Burger> GetBurgers();
-        public void AddBurger(Burger burger);
-        public void DeleteBurger(Burger burger);
+       // public IQueryable<Burger> GetBurgers();
+        //public void AddBurger(Burger burger);
+        //public void DeleteBurger(Burger burger);
         public IQueryable<Dessert> GetDesserts();
         public void AddDessert(Dessert dessert);
         public void DeleteDessert(Dessert dessert);

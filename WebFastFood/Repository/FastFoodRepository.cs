@@ -20,10 +20,10 @@ namespace WebFastFood.Repository
             context.Beverages.Add(beverage);
         }
 
-        public void AddBurger(Burger burger)
-        {
-            context.Burgers.Add(burger);
-        }
+        //public void AddBurger(Burger burger)
+        //{
+        //    context.Burgers.Add(burger);
+        //}
 
         public void AddDessert(Dessert dessert)
         {
@@ -45,10 +45,10 @@ namespace WebFastFood.Repository
             context.Beverages.Remove(beverage);
         }
 
-        public void DeleteBurger(Burger burger)
-        {
-            context.Burgers.Remove(burger);
-        }
+        //public void DeleteBurger(Burger burger)
+        //{
+        //    context.Burgers.Remove(burger);
+        //}
 
         public void DeleteDessert(Dessert dessert)
         {
@@ -70,10 +70,10 @@ namespace WebFastFood.Repository
             return context.Beverages;
         }
 
-        public IQueryable<Burger> GetBurgers()
-        {
-            return context.Burgers;
-        }
+        //public IQueryable<Burger> GetBurgers()
+        //{
+        //    return context.Burgers;
+        //}
 
         public IQueryable<Dessert> GetDesserts()
         {
