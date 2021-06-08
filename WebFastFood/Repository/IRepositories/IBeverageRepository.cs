@@ -8,9 +8,10 @@ namespace WebFastFood.Repository.IRepositories
 {
     public interface IBeverageRepository 
     {
-        public IQueryable<Beverage> GetBeverages();
-        public void AddBeverage(Beverage beverage);
-        public void DeleteBeverage(Beverage beverage);
-
+        public Task<List<Beverage>> GetBeveragesAsync();
+        public Task<Beverage> GetBeverageAsync(int id);
+        public void CreateAsync(Beverage newBeverage);
+        public void DeleteAsync(Beverage beverage);
+        public void UpdateAsync(Beverage newBeverage);
     }
 }

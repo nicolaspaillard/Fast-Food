@@ -1,4 +1,5 @@
 ﻿using Dal;
+using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -14,20 +15,32 @@ namespace WebFastFood.Repository
         public BeverageRepository(FastFoodContext context) {
             this.context = context;
         }
-
-        public void AddBeverage(Beverage beverage)
+        public void CreateAsync(Beverage beverage)
         {
             context.Beverages.Add(beverage);
+            context.SaveChangesAsync();
         }
-
-        public void DeleteBeverage(Beverage beverage)
+        public void DeleteAsync(Beverage beverage)
         {
             context.Beverages.Remove(beverage);
+            context.SaveChangesAsync();
         }
-
-        public IQueryable<Beverage> GetBeverages()
+        public async Task<List<Beverage>> GetBeveragesAsync()
         {
-            return context.Beverages;
+            return await context.Beverages.ToListAsync();
+        }
+        public async Task<Beverage> GetBeverageAsync(int id)
+        {
+            return await context.Beverages.FindAsync(id);
+        }
+        public void UpdateAsync(Beverage newBeverage)
+        {
+            context.Beverages.First(b => b.Id == newBeverage.Id).Name = newBeverage.Name;
+            context.Beverages.First(b => b.Id == newBeverage.Id).Description = newBeverage.Description;
+            context.Beverages.First(b => b.Id == newBeverage.Id).Price = newBeverage.Price;
+            context.Beverages.First(b => b.Id == newBeverage.Id).IsCarbonated = newBeverage.IsCarbonated;
+            context.Beverages.First(b => b.Id == newBeverage.Id).Millimeter = newBeverage.Millimeter;
+            context.SaveChangesAsync();
         }
     }
 }
