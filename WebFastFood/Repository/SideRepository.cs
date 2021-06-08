@@ -32,7 +32,7 @@ namespace WebFastFood.Repository
         }
         public async Task<Side> GetSideAsync(int id)
         {
-            return await context.Sides.FindAsync(id);
+            return await context.Sides.FirstOrDefaultAsync(x => x.Id == id);
         }
         public void UpdateAsync(Side newSide)
         {

@@ -58,7 +58,7 @@ namespace WebFastFood.Controllers
         }
 
         // GET: BurgerController/Edit/5
-        public async Task<ActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var burger = await _repository.GetBurgerAsync((int)id);
             return View(burger);
@@ -84,7 +84,7 @@ namespace WebFastFood.Controllers
         }
 
         // GET: BurgerController/Delete/5
-        public ActionResult Delete(Burger burger)
+        public async Task<IActionResult> Delete(Burger burger)
         {
             return View();
         }

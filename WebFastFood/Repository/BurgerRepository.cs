@@ -32,7 +32,7 @@ namespace WebFastFood.Repository
         }
         public async Task<Burger> GetBurgerAsync(int id)
         {
-            return await context.Burgers.FindAsync(id);
+            return await context.Burgers.FirstOrDefaultAsync(x => x.Id == id);
         }
         public void UpdateAsync(Burger newBurger)
         {

@@ -7,15 +7,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Dal;
 using Models;
-using Microsoft.Extensions.Logging;
 using WebFastFood.Repository.IRepositories;
+using Microsoft.Extensions.Logging;
 
 namespace WebFastFood.Controllers
 {
     public class SidesController : Controller
     {
         private readonly ILogger<SidesController> _logger;
-        ISideRepository _repository;
+        private ISideRepository _repository;
         public SidesController(ILogger<SidesController> logger, ISideRepository repository)
         {
             _logger = logger;
@@ -133,9 +133,19 @@ namespace WebFastFood.Controllers
             return View(side);
         }
 
-        private bool SideExists(int id)
+        // POST: Sides/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            return _repository.GetSidesAsync().Result.Any(e => e.Id == id);
+            var side = await _repository.GetSideAsync(id);
+            _repository.DeleteAsync(side);
+            return RedirectToAction(nameof(Index));
+        }
+
+        private async Task<bool> SideExists(int id)
+        {
+            return (await _repository.GetSidesAsync()).Any(e => e.Id == id);
         }
     }
 }

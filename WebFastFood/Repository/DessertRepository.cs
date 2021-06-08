@@ -33,7 +33,7 @@ namespace WebFastFood.Repository
         }
         public async Task<Dessert> GetDessertAsync(int id)
         {
-            return await context.Desserts.FindAsync(id);
+            return await context.Desserts.FirstOrDefaultAsync(x => x.Id == id);
         }
         public void UpdateAsync(Dessert newDessert)
         {
