@@ -27,9 +27,19 @@ namespace WebFastFood.Controllers
         }
 
         // GET: MenuController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            return View(_repository.GetMenus().First(m => m.Id == id));
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var menu = _repository.GetMenu((int)id);
+            if (menu == null)
+            {
+                return NotFound();
+            }
+
+            return View(menu);
         }
 
         // GET: MenuController/Create
@@ -73,7 +83,7 @@ namespace WebFastFood.Controllers
                 menu.Side = _repository.GetSides().First(s => s.Id == menu.Side.Id);
                 menu.Beverage = _repository.GetBeverages().First(s => s.Id == menu.Beverage.Id);
                 menu.Dessert = _repository.GetDesserts().First(s => s.Id == menu.Dessert.Id);
-                _repository.AddMenu(menu);
+                _repository.Create(menu);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -83,7 +93,7 @@ namespace WebFastFood.Controllers
         }
 
         // GET: MenuController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
             ViewData["Burgers"] = _repository.GetBurgers().Select(x =>
                                   new SelectListItem()
@@ -109,33 +119,57 @@ namespace WebFastFood.Controllers
                                       Text = x.Name,
                                       Value = x.Id.ToString()
                                   }).ToList();
-            return View(_repository.GetMenus().First(m => m.Id == id));
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var menu = _repository.GetMenu((int)id);
+            if (menu == null)
+            {
+                return NotFound();
+            }
+            return View(menu);
         }
 
         // POST: MenuController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Menu menu)
+        public ActionResult Edit(Menu menu)
         {
-            try
+            if (ModelState.IsValid)
             {
-                menu.Burger = _repository.GetBurgers().First(b => b.Id == menu.Burger.Id);
-                menu.Side = _repository.GetSides().First(s => s.Id == menu.Side.Id);
-                menu.Beverage = _repository.GetBeverages().First(s => s.Id == menu.Beverage.Id);
-                menu.Dessert = _repository.GetDesserts().First(s => s.Id == menu.Dessert.Id);
-                _repository.EditMenu(id, menu);
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    menu.Burger = _repository.GetBurger(menu.Burger.Id);
+                    menu.Side = _repository.GetSide(menu.Side.Id);
+                    menu.Beverage = _repository.GetBeverage(menu.Beverage.Id);
+                    menu.Dessert = _repository.GetDessert(menu.Dessert.Id);
+                    _repository.Update(menu);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    return View(_repository.GetMenu(menu.Id));
+                }
             }
-            catch
-            {
-                return View(_repository.GetMenus().First(m => m.Id == id));
-            }
+            return View(_repository.GetMenu(menu.Id));
         }
 
         // GET: MenuController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            _repository.DeleteMenu(_repository.GetMenus().First(m => m.Id == id));
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var menu = _repository.GetMenu((int)id);
+            if (menu == null)
+            {
+                return NotFound();
+            }
+            _repository.Delete(menu);
             return RedirectToAction(nameof(Index));
         }
     }

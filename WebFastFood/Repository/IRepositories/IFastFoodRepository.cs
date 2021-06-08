@@ -9,24 +9,29 @@ namespace WebFastFood.Repository.IRepositories
     public interface IFastFoodRepository
     {
         public IQueryable<Beverage> GetBeverages();
-        public void AddBeverage(Beverage newBeverage);
-        public void DeleteBeverage(Beverage beverage);
-        public void EditBeverage(int id, Beverage newBeverage);
+        public Beverage GetBeverage(int id);
+        public void Create(Beverage newBeverage);
+        public void Delete(Beverage beverage);
+        public void Update(Beverage newBeverage);
         public IQueryable<Burger> GetBurgers();
-        public void AddBurger(Burger newBurger);
-        public void DeleteBurger(Burger burger);
-        public void EditBurger(int id, Burger newBurger);
+        public Burger GetBurger(int id);
+        public void Create(Burger newBurger);
+        public void Delete(Burger burger);
+        public void Update(Burger newBurger);
         public IQueryable<Dessert> GetDesserts();
-        public void AddDessert(Dessert newDessert);
-        public void DeleteDessert(Dessert dessert);
-        public void EditDessert(int id, Dessert newDessert);
+        public Dessert GetDessert(int id);
+        public void Create(Dessert newDessert);
+        public void Delete(Dessert dessert);
+        public void Update(Dessert newDessert);
         public IQueryable<Side> GetSides();
-        public void AddSide(Side newSide);
-        public void DeleteSide(Side side);
-        public void EditSide(int id, Side newSide);
+        public Side GetSide(int id);
+        public void Create(Side newSide);
+        public void Delete(Side side);
+        public void Update(Side newSide);
         public IQueryable<Menu> GetMenus();
-        public void AddMenu(Menu newMenu);
-        public void DeleteMenu(Menu menu);
-        public void EditMenu(int id, Menu newMenu);
+        public Menu GetMenu(int id);
+        public void Create(Menu newMenu);
+        public void Delete(Menu menu);
+        public void Update(Menu newMenu);
     }
 }
