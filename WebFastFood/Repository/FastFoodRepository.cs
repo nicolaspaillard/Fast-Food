@@ -17,11 +17,7 @@ namespace WebFastFood.Repository
         {
             this.context = context;
         }
-        public void CreateAsync(Beverage beverage)
-        {
-            context.Beverages.Add(beverage);
-            context.SaveChangesAsync();
-        }
+
         public void CreateAsync(Burger burger)
         {
             context.Burgers.Add(burger);
@@ -45,11 +41,7 @@ namespace WebFastFood.Repository
             context.SaveChangesAsync();
         }
 
-        public void DeleteAsync(Beverage beverage)
-        {
-            context.Beverages.Remove(beverage);
-            context.SaveChangesAsync();
-        }
+
         public void DeleteAsync(Burger burger)
         {
             context.Burgers.Remove(burger);
@@ -73,10 +65,7 @@ namespace WebFastFood.Repository
             context.SaveChangesAsync();
         }
 
-        public async Task<List<Beverage>> GetBeveragesAsync()
-        {
-            return await context.Beverages.ToListAsync();
-        }
+
 
         public async Task<List<Burger>> GetBurgersAsync()
         {
@@ -97,10 +86,7 @@ namespace WebFastFood.Repository
             return await context.Sides.ToListAsync();
         }
 
-        public async Task<Beverage> GetBeverageAsync(int id)
-        {
-            return await context.Beverages.FindAsync(id);
-        }
+
 
         public async Task<Burger> GetBurgerAsync(int id)
         {
@@ -133,15 +119,6 @@ namespace WebFastFood.Repository
             context.SaveChangesAsync();
         }
 
-        public void UpdateAsync(Beverage newBeverage)
-        {
-            context.Beverages.First(b => b.Id == newBeverage.Id).Name = newBeverage.Name;
-            context.Beverages.First(b => b.Id == newBeverage.Id).Description = newBeverage.Description;
-            context.Beverages.First(b => b.Id == newBeverage.Id).Price = newBeverage.Price;
-            context.Beverages.First(b => b.Id == newBeverage.Id).IsCarbonated = newBeverage.IsCarbonated;
-            context.Beverages.First(b => b.Id == newBeverage.Id).Millimeter = newBeverage.Millimeter;
-            context.SaveChangesAsync();
-        }
 
         public void UpdateAsync(Burger newBurger)
         {
