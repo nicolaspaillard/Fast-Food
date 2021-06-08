@@ -30,6 +30,10 @@ namespace WebFastFood.Repository
         {
             return await context.Sides.ToListAsync();
         }
+        public async Task<Side> GetSideAsync(int id)
+        {
+            return await context.Sides.FindAsync(id);
+        }
         public void UpdateAsync(Side newSide)
         {
             context.Sides.First(s => s.Id == newSide.Id).Name = newSide.Name;

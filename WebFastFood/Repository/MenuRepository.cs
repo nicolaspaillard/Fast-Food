@@ -30,10 +30,6 @@ namespace WebFastFood.Repository
         {
             return await context.Menus.Include(m => m.Burger).Include(m => m.Side).Include(m => m.Beverage).Include(m => m.Dessert).ToListAsync();
         }
-        public async Task<Side> GetSideAsync(int id)
-        {
-            return await context.Sides.FindAsync(id);
-        }
         public async Task<Menu> GetMenuAsync(int id)
         {
             return await context.Menus.FindAsync(id);
