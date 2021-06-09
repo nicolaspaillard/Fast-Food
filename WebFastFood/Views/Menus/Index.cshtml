@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Models.Menu>
+﻿@model List<Models.Menu>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,6 +13,7 @@
     <thead>
         <tr>
             <th>Nom</th>
+            <th>Composition</th>
             <th>Prix</th>
             <th>Description</th>
             <th></th>
@@ -20,22 +21,30 @@
     </thead>
     <tbody>
         @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">Détails</a> |<br />
-                    <a asp-action="Edit" asp-route-id="@item.Id">Modifier</a> |<br />
-                    <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <ul>
+                    <li>@item.Burger.Name</li>
+                    <li>@item.Side.Name</li>
+                    <li>@item.Beverage.Name</li>
+                    <li>@item.Dessert.Name</li>
+                </ul>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Détails</a> |<br />
+                <a asp-action="Edit" asp-route-id="@item.Id">Modifier</a> |<br />
+                <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

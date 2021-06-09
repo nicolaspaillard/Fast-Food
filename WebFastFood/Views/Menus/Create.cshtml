@@ -1,4 +1,4 @@
-﻿@model Models.Menu
+﻿@model WebFastFood.Models.ProductsViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,31 +13,31 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label">Nom</label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Menu.Name" class="control-label">Nom</label>
+                <input asp-for="Menu.Name" class="form-control" />
+                <span asp-validation-for="Menu.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Price" class="control-label">Prix</label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
+                <label asp-for="Menu.Price" class="control-label">Prix</label>
+                <input asp-for="Menu.Price" class="form-control" />
+                <span asp-validation-for="Menu.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label">Déscription</label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="Menu.Description" class="control-label">Déscription</label>
+                <textarea asp-for="Menu.Description" class="form-control"></textarea>
+                <span asp-validation-for="Menu.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 @{
-                    List<SelectListItem> burgers = (List<SelectListItem>)ViewData["Burgers"];
-                    List<SelectListItem> sides = (List<SelectListItem>)ViewData["Sides"];
-                    List<SelectListItem> beverages = (List<SelectListItem>)ViewData["Beverages"];
-                    List<SelectListItem> desserts = (List<SelectListItem>)ViewData["Desserts"];
+                    List<SelectListItem> burgers = Model.Burgers;
+                    List<SelectListItem> sides = Model.Sides;
+                    List<SelectListItem> beverages = Model.Beverages;
+                    List<SelectListItem> desserts = Model.Desserts;
                 }
-                <select asp-for="Burger.Id" asp-items="burgers"></select>
-                <select asp-for="Side.Id" asp-items="sides"></select>
-                <select asp-for="Beverage.Id" asp-items="beverages"></select>
-                <select asp-for="Dessert.Id" asp-items="desserts"></select>
+                <select asp-for="Menu.Burger.Id" asp-items="burgers"></select>
+                <select asp-for="Menu.Side.Id" asp-items="sides"></select>
+                <select asp-for="Menu.Beverage.Id" asp-items="beverages"></select>
+                <select asp-for="Menu.Dessert.Id" asp-items="desserts"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Ajouter" class="btn btn-primary" />
