@@ -9,6 +9,7 @@ using Dal;
 using Models;
 using Microsoft.Extensions.Logging;
 using WebFastFood.Repository.IRepositories;
+using WebFastFood.Models;
 
 namespace WebFastFood.Controllers
 {
@@ -20,6 +21,8 @@ namespace WebFastFood.Controllers
         private IBurgerRepository _burgers;
         private IDessertRepository _desserts;
         private ISideRepository _sides;
+
+        private ProductsViewModel _productsViewModel;
         public MenusController(ILogger<MenusController> logger, IMenuRepository repository, IBeverageRepository beverages, IBurgerRepository burgers, IDessertRepository desserts, ISideRepository sides)
         {
             _logger = logger;
@@ -28,6 +31,30 @@ namespace WebFastFood.Controllers
             _burgers = burgers;
             _desserts = desserts;
             _sides = sides;
+            _productsViewModel.Burgers = _burgers.GetBurgersAsync().Result.Select(x =>
+                      new SelectListItem()
+                      {
+                          Text = x.Name,
+                          Value = x.Id.ToString()
+                      }).ToList();
+            _productsViewModel.Beverages = _beverages.GetBeveragesAsync().Result.Select(x =>
+                                  new SelectListItem()
+                                  {
+                                      Text = x.Name,
+                                      Value = x.Id.ToString()
+                                  }).ToList();
+            _productsViewModel.Sides = _sides.GetSidesAsync().Result.Select(x =>
+                                  new SelectListItem()
+                                  {
+                                      Text = x.Name,
+                                      Value = x.Id.ToString()
+                                  }).ToList();
+            _productsViewModel.Desserts = _desserts.GetDessertsAsync().Result.Select(x =>
+                                  new SelectListItem()
+                                  {
+                                      Text = x.Name,
+                                      Value = x.Id.ToString()
+                                  }).ToList();
         }
 
         // GET: Menus
@@ -56,31 +83,7 @@ namespace WebFastFood.Controllers
         // GET: Menus/Create
         public IActionResult Create()
         {
-            ViewData["Burgers"] = _burgers.GetBurgersAsync().Result.Select(x =>
-                      new SelectListItem()
-                      {
-                          Text = x.Name,
-                          Value = x.Id.ToString()
-                      }).ToList();
-            ViewData["Sides"] = _sides.GetSidesAsync().Result.Select(x =>
-                                  new SelectListItem()
-                                  {
-                                      Text = x.Name,
-                                      Value = x.Id.ToString()
-                                  }).ToList();
-            ViewData["Beverages"] = _beverages.GetBeveragesAsync().Result.Select(x =>
-                                  new SelectListItem()
-                                  {
-                                      Text = x.Name,
-                                      Value = x.Id.ToString()
-                                  }).ToList();
-            ViewData["Desserts"] = _desserts.GetDessertsAsync().Result.Select(x =>
-                                  new SelectListItem()
-                                  {
-                                      Text = x.Name,
-                                      Value = x.Id.ToString()
-                                  }).ToList();
-            return View();
+            return View(_);
         }
 
         // POST: Menus/Create
