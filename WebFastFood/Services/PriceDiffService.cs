@@ -26,12 +26,16 @@ namespace WebFastFood.Services
 
         public async Task<decimal> PriceDiff(Menu menu)
         {
-            var beverage = (await _beverages.GetBeverageAsync(menu.Beverage.Id)).Price;
-            var dessert = (await _desserts.GetDessertAsync(menu.Dessert.Id)).Price;
-            var burger = (await _burgers.GetBurgerAsync(menu.Burger.Id)).Price;
-            var side = (await _sides.GetSideAsync(menu.Side.Id)).Price;
+            var beveragePrice = (await _beverages.GetBeverageAsync(menu.Beverage.Id)).Price;
+            decimal dessertPrice = 0;
+            if (menu.Dessert != null)
+            {
+                dessertPrice = (await _desserts.GetDessertAsync(menu.Dessert.Id)).Price;
+            }            
+            var burgerPrice = (await _burgers.GetBurgerAsync(menu.Burger.Id)).Price;
+            var sidePrice = (await _sides.GetSideAsync(menu.Side.Id)).Price;
 
-            return beverage + dessert + burger + side - menu.Price;
+            return beveragePrice + dessertPrice + burgerPrice + sidePrice - menu.Price;
         }
 
 

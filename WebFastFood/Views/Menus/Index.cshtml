@@ -21,7 +21,8 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -31,8 +32,20 @@
                     <li>@item.Burger.Name</li>
                     <li>@item.Side.Name</li>
                     <li>@item.Beverage.Name</li>
-                    <li>@item.Dessert.Name</li>
-                </ul>
+                    <li>
+                        @{
+                            if (item.Dessert != null)
+                            {
+                                @item.Dessert.Name
+
+                            }
+                            else
+                            {
+                                @Html.Raw("Pas de dessert")
+                            }
+                        }
+                    </li>
+                    </ul>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price) €
@@ -44,6 +57,9 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
+                @{
+                    var controllerName = this.Context.Request.RouteValues["controller"].ToString();
+                }
                 <a asp-action="Details" asp-route-id="@item.Id">Détails</a> |<br />
                 <a asp-action="Edit" asp-route-id="@item.Id">Modifier</a> |<br />
                 <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>

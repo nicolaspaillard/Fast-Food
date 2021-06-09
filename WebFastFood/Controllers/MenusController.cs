@@ -49,20 +49,20 @@ namespace WebFastFood.Controllers
                                       Text = x.Name,
                                       Value = x.Id.ToString()
                                   }).ToList();
-            _productsViewModel.Desserts = _desserts.GetDessertsAsync().Result.Select(x =>
+            _productsViewModel.Desserts.Add(new() { Text = "Pas de dessert", Value="-1"});
+            _productsViewModel.Desserts.AddRange(_desserts.GetDessertsAsync().Result.Select(x =>
                                   new SelectListItem()
                                   {
                                       Text = x.Name,
                                       Value = x.Id.ToString()
-                                  }).ToList();
+                                  }).ToList());
         }
-
-        // GET: Menus
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return View(await _repository.GetMenusAsync());
-        }
 
+        }
         // GET: Menus/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -91,18 +91,22 @@ namespace WebFastFood.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,Description,Burger,Side,Beverage,Dessert")] Menu menu)
+        public async Task<IActionResult> Create([Bind("Name,Price,Description,Burger,Side,Beverage,Dessert")] Menu menu)
         {
             if (ModelState.IsValid)
             {
                 menu.Burger = await _burgers.GetBurgerAsync(menu.Burger.Id);
                 menu.Side = await _sides.GetSideAsync(menu.Side.Id);
                 menu.Beverage = await _beverages.GetBeverageAsync(menu.Beverage.Id);
-                menu.Dessert = await _desserts.GetDessertAsync(menu.Dessert.Id);
+                if (menu.Dessert.Id != -1)
+                {
+                    menu.Dessert = await _desserts.GetDessertAsync(menu.Dessert.Id);
+                }
+                else { menu.Dessert = null; }
                 await _repository.CreateAsync(menu);
                 return RedirectToAction(nameof(Index));
             }
-            return View(menu);
+            return View(_productsViewModel);
         }
 
         // GET: Menus/Edit/5

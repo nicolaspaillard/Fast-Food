@@ -41,7 +41,6 @@ namespace Dal
             modelBuilder.Entity<Menu>().HasOne(m => m.Beverage);
             modelBuilder.Entity<Menu>().HasOne(m => m.Burger);
             modelBuilder.Entity<Menu>().HasOne(m => m.Side);
-            modelBuilder.Entity<Menu>().HasOne(m => m.Dessert);
 
             //modelBuilder.Entity<Person>()
             //.HasKey(p => p.PersonId);

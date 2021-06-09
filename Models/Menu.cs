@@ -11,6 +11,6 @@ namespace Models
         public virtual Beverage Beverage { get; set; }
         public virtual Side Side { get; set; }
         public virtual Burger Burger { get; set; }
-        public virtual Dessert Dessert { get; set; }
+        public virtual Dessert? Dessert { get; set; }
     }
 }
