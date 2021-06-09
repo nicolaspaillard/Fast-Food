@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Manus</h1>
+<h1>Menus</h1>
 
 <p>
     <a asp-action="Create">Ajouter Nouveau</a>
@@ -25,33 +25,31 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @item.Name
             </td>
             <td>
                 <ul>
                     <li>@item.Burger.Name</li>
                     <li>@item.Side.Name</li>
                     <li>@item.Beverage.Name</li>
-                    <li>
-                        @{
-                            if (item.Dessert != null)
-                            {
-                                @item.Dessert.Name
+                    @{
+                        if (item.Dessert != null)
+                        {
+                            <li>@item.Dessert.Name</li>
 
-                            }
-                            else
-                            {
-                                @Html.Raw("Pas de dessert")
-                            }
                         }
-                    </li>
-                    </ul>
+                        else
+                        {
+                            <li>Pas de dessert</li>
+                        }
+                    }
+                </ul>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price) €
+                @Html.DisplayFor(modelItem => item.Price)€
             </td>
             <td>
-                @await PriceDiffService.PriceDiff(item) €
+                @await PriceDiffService.PriceDiff(item)€
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)

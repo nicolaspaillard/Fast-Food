@@ -15,15 +15,35 @@
         </dd>
         <dt class="col-sm-2">Prix</dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
+            @Html.DisplayFor(model => model.Price) €
         </dd>
         <dt class="col-sm-2">Description</dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
+        <dt class="col-sm-2">Composition</dt>
+        <dd class="col-sm-10">
+            <ul>
+                <li>@Model.Burger.Name</li>
+                <li>@Model.Side.Name</li>
+                <li>@Model.Beverage.Name</li>                
+                @{
+                    if (Model.Dessert != null)
+                    {
+                        <li>@Model.Dessert.Name</li>
+
+                    }
+                    else
+                    {
+                        <li>Pas de dessert</li>
+                    }
+                }                
+            </ul>
+        </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Modifier</a> |
+    <a asp-action="Delete" asp-route-id="@Model.Id">Supprimer</a> |
     <a asp-action="Index">Retour à la liste</a>
 </div>
