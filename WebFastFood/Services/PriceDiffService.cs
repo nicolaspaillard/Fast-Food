@@ -15,7 +15,7 @@ namespace WebFastFood.Services
         private IDessertRepository _desserts;
         private ISideRepository _sides;
 
-        public PriceDiffService(IMenuRepository repository,IBeverageRepository beverages, IBurgerRepository burgers, ISideRepository sides, IDessertRepository desserts)
+        public PriceDiffService(IMenuRepository repository, IBeverageRepository beverages, IBurgerRepository burgers, ISideRepository sides, IDessertRepository desserts)
         {
             _menus = repository;
             _beverages = beverages;
@@ -27,11 +27,15 @@ namespace WebFastFood.Services
         public async Task<decimal> PriceDiff(Menu menu)
         {
             var beverage = (await _beverages.GetBeverageAsync(menu.Beverage.Id)).Price;
-            var dessert = (await _desserts.GetDessertAsync(menu.Dessert.Id)).Price;
             var burger = (await _burgers.GetBurgerAsync(menu.Burger.Id)).Price;
             var side = (await _sides.GetSideAsync(menu.Side.Id)).Price;
+            if (menu.Dessert != null)
+            {
+                var dessert = (await _desserts.GetDessertAsync(menu.Dessert.Id)).Price;
+                return beverage + dessert + burger + side - menu.Price;
+            }
+            return beverage + burger + side - menu.Price;
 
-            return beverage + dessert + burger + side - menu.Price;
         }
 
 

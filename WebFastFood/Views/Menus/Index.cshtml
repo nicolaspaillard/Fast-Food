@@ -31,7 +31,10 @@
                     <li>@item.Burger.Name</li>
                     <li>@item.Side.Name</li>
                     <li>@item.Beverage.Name</li>
-                    <li>@item.Dessert.Name</li>
+                    @if (item.Dessert != null)
+                    {
+                        <li>@item.Dessert?.Name</li>
+                    }
                 </ul>
             </td>
             <td>
