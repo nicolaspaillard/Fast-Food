@@ -9,6 +9,7 @@ namespace WebFastFood.Models
 {
     public class ProductsViewModel
     {
+        public Menu Menu { get; set; }
         public List<SelectListItem> Burgers { get; set; }
         public List<SelectListItem> Beverages { get; set; }
         public List<SelectListItem> Desserts { get; set; }

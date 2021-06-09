@@ -22,7 +22,7 @@ namespace WebFastFood.Controllers
         private IDessertRepository _desserts;
         private ISideRepository _sides;
 
-        private ProductsViewModel _productsViewModel;
+        private ProductsViewModel _productsViewModel = new();
         public MenusController(ILogger<MenusController> logger, IMenuRepository repository, IBeverageRepository beverages, IBurgerRepository burgers, IDessertRepository desserts, ISideRepository sides)
         {
             _logger = logger;
@@ -112,37 +112,13 @@ namespace WebFastFood.Controllers
             {
                 return NotFound();
             }
-
             var menu = await _repository.GetMenuAsync((int)id);
             if (menu == null)
             {
                 return NotFound();
             }
-            ViewData["Burgers"] = (await _burgers.GetBurgersAsync()).Select(x =>
-                                  new SelectListItem()
-                                  {
-                                      Text = x.Name,
-                                      Value = x.Id.ToString()
-                                  }).ToList();
-            ViewData["Sides"] = (await _sides.GetSidesAsync()).Select(x =>
-                                  new SelectListItem()
-                                  {
-                                      Text = x.Name,
-                                      Value = x.Id.ToString()
-                                  }).ToList();
-            ViewData["Beverages"] = (await _beverages.GetBeveragesAsync()).Select(x =>
-                                  new SelectListItem()
-                                  {
-                                      Text = x.Name,
-                                      Value = x.Id.ToString()
-                                  }).ToList();
-            ViewData["Desserts"] = (await _desserts.GetDessertsAsync()).Select(x =>
-                                  new SelectListItem()
-                                  {
-                                      Text = x.Name,
-                                      Value = x.Id.ToString()
-                                  }).ToList();
-            return View(menu);
+            _productsViewModel.Menu = menu;
+            return View(_productsViewModel);
         }
 
         // POST: Menus/Edit/5
@@ -150,7 +126,7 @@ namespace WebFastFood.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,Description")] Menu menu)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,Description,Burger,Side,Beverage,Dessert")] Menu menu)
         {
             if (id != menu.Id)
             {
