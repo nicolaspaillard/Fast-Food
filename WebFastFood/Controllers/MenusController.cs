@@ -162,7 +162,7 @@ namespace WebFastFood.Controllers
                     menu.Side = await _sides.GetSideAsync(menu.Side.Id);
                     menu.Beverage = await _beverages.GetBeverageAsync(menu.Beverage.Id);
                     menu.Dessert = await _desserts.GetDessertAsync(menu.Dessert.Id);
-                    _repository.UpdateAsync(menu);
+                    await _repository.UpdateAsync(menu);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
