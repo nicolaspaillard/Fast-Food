@@ -27,16 +27,26 @@
                 <textarea asp-for="Menu.Description" class="form-control"></textarea>
                 <span asp-validation-for="Menu.Description" class="text-danger"></span>
             </div>
+            @{
+                List<SelectListItem> burgers = Model.Burgers;
+                List<SelectListItem> sides = Model.Sides;
+                List<SelectListItem> beverages = Model.Beverages;
+                List<SelectListItem> desserts = Model.Desserts;
+            }
             <div class="form-group">
-                @{
-                    List<SelectListItem> burgers = Model.Burgers;
-                    List<SelectListItem> sides = Model.Sides;
-                    List<SelectListItem> beverages = Model.Beverages;
-                    List<SelectListItem> desserts = Model.Desserts;
-                }
+                <label asp-for="Menu.Burger" class="control-label">Burger</label><br />
                 <select asp-for="Menu.Burger.Id" asp-items="burgers"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Menu.Side" class="control-label">Accompagnement</label><br />
                 <select asp-for="Menu.Side.Id" asp-items="sides"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Menu.Beverage" class="control-label">Boisson</label><br />
                 <select asp-for="Menu.Beverage.Id" asp-items="beverages"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Menu.Dessert" class="control-label">Dessert</label><br />
                 <select asp-for="Menu.Dessert.Id" asp-items="desserts"></select>
             </div>
             <div class="form-group">
