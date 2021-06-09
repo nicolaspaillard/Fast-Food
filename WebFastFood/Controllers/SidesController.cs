@@ -31,17 +31,9 @@ namespace WebFastFood.Controllers
         // GET: Sides/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var side = await _repository.GetSideAsync((int)id);
-            if (side == null)
-            {
-                return NotFound();
-            }
-
+            if (side == null) return NotFound();
             return View(side);
         }
 
@@ -60,7 +52,7 @@ namespace WebFastFood.Controllers
         {
             if (ModelState.IsValid)
             {
-                _repository.CreateAsync(side);
+                await _repository.CreateAsync(side);
                 return RedirectToAction(nameof(Index));
             }
             return View(side);
@@ -69,16 +61,9 @@ namespace WebFastFood.Controllers
         // GET: Sides/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var side = await _repository.GetSideAsync((int)id);
-            if (side == null)
-            {
-                return NotFound();
-            }
+            if (side == null) return NotFound();
             return View(side);
         }
 
@@ -89,27 +74,17 @@ namespace WebFastFood.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Weight,SaltWeight,Id,Name,Price,Description")] Side side)
         {
-            if (id != side.Id)
-            {
-                return NotFound();
-            }
-
+            if (id != side.Id) return NotFound();
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _repository.UpdateAsync(side);
+                    await _repository.UpdateAsync(side);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SideExists(side.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!await SideExists(side.Id)) return NotFound(); 
+                    else throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -119,17 +94,9 @@ namespace WebFastFood.Controllers
         // GET: Sides/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var side = await _repository.GetSideAsync((int)id);
-            if (side == null)
-            {
-                return NotFound();
-            }
-
+            if (side == null) return NotFound();
             return View(side);
         }
 
@@ -143,9 +110,9 @@ namespace WebFastFood.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SideExists(int id)
+        private async Task<bool> SideExists(int id)
         {
-            return _repository.GetSidesAsync().Result.Any(e => e.Id == id);
+            return await _repository.SideExistsAsync(id);
         }
     }
 }

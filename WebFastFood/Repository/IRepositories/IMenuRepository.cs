@@ -13,5 +13,6 @@ namespace WebFastFood.Repository.IRepositories
         public Task<int> CreateAsync(Menu newMenu);
         public Task<int> DeleteAsync(Menu menu);
         public Task<int> UpdateAsync(Menu newMenu);
+        public Task<bool> MenuExistsAsync(int id);
     }
 }

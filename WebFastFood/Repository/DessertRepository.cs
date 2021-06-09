@@ -44,5 +44,9 @@ namespace WebFastFood.Repository
             context.Desserts.First(d => d.Id == newDessert.Id).Millimeter = newDessert.Millimeter;
             return await context.SaveChangesAsync();
         }
+        public async Task<bool> DessertExistsAsync(int id)
+        {
+            return await context.Desserts.AnyAsync(d => d.Id == id);
+        }
     }
 }

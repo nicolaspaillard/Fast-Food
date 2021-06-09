@@ -29,17 +29,9 @@ namespace WebFastFood.Controllers
         // GET: Beverages/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var beverage = await _repository.GetBeverageAsync((int)id);
-            if (beverage == null)
-            {
-                return NotFound();
-            }
-
+            if (beverage == null) return NotFound();
             return View(beverage);
         }
         // GET: Beverages/Create
@@ -54,9 +46,8 @@ namespace WebFastFood.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Millimeter,IsCarbonated,Id,Name,Price,Description")] Beverage beverage)
         {
-            if (ModelState.IsValid)
-            {
-               _repository.CreateAsync(beverage);
+            if (ModelState.IsValid){
+               await _repository.CreateAsync(beverage);
                 return RedirectToAction(nameof(Index));
             }
             return View(beverage);
@@ -64,15 +55,9 @@ namespace WebFastFood.Controllers
         // GET: Beverages/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
             var beverage = await _repository.GetBeverageAsync((int)id);
-            if (beverage == null)
-            {
-                return NotFound();
-            }
+            if (beverage == null) return NotFound();
             return View(beverage);
         }
         // POST: Beverages/Edit/5
@@ -82,27 +67,18 @@ namespace WebFastFood.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Millimeter,IsCarbonated,Id,Name,Price,Description")] Beverage beverage)
         {
-            if (id != beverage.Id)
-            {
-                return NotFound();
-            }
+            if (id != beverage.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _repository.UpdateAsync(beverage);
+                    await _repository.UpdateAsync(beverage);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BeverageExists(beverage.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!BeverageExists(beverage.Id)) return NotFound();
+                    else throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -111,17 +87,9 @@ namespace WebFastFood.Controllers
         // GET: Beverages/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var beverage = await _repository.GetBeverageAsync((int)id);
-            if (beverage == null)
-            {
-                return NotFound();
-            }
-
+            if (beverage == null) return NotFound();
             return View(beverage);
         }
         // POST: Beverages/Delete/5

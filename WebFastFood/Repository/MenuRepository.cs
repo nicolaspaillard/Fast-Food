@@ -45,5 +45,9 @@ namespace WebFastFood.Repository
             context.Menus.First(m => m.Id == newMenu.Id).Dessert = newMenu.Dessert;
             return await context.SaveChangesAsync();
         }
+        public async Task<bool> MenuExistsAsync(int id)
+        {
+            return await context.Menus.AnyAsync(d => d.Id == id);
+        }
     }
 }

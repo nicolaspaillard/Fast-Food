@@ -29,10 +29,34 @@
             </td>
             <td>
                 <ul>
-                    <li>@item.Burger.Name</li>
-                    <li>@item.Side.Name</li>
-                    <li>@item.Beverage.Name</li>
                     @{
+                        if (item.Burger != null)
+                        {
+                            <li>@item.Burger.Name</li>
+
+                        }
+                        else
+                        {
+                            <li>Pas de burger</li>
+                        }
+                        if (item.Side != null)
+                        {
+                            <li>@item.Side.Name</li>
+
+                        }
+                        else
+                        {
+                            <li>Pas d'accompagnement</li>
+                        }
+                        if (item.Beverage != null)
+                        {
+                            <li>@item.Beverage.Name</li>
+
+                        }
+                        else
+                        {
+                            <li>Pas de burger</li>
+                        }
                         if (item.Dessert != null)
                         {
                             <li>@item.Dessert.Name</li>

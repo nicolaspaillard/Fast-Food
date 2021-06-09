@@ -13,5 +13,6 @@ namespace WebFastFood.Repository.IRepositories
         public Task<int> CreateAsync(Beverage newBeverage);
         public Task<int> DeleteAsync(Beverage beverage);
         public Task<int> UpdateAsync(Beverage newBeverage);
+        public Task<bool> BeverageExistsAsync(int id);
     }
 }

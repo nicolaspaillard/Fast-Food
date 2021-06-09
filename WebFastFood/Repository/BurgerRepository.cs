@@ -43,5 +43,9 @@ namespace WebFastFood.Repository
             context.Burgers.First(b => b.Id == newBurger.Id).BeefWeight = newBurger.BeefWeight;
             return await context.SaveChangesAsync();
         }
+        public async Task<bool> BurgerExistsAsync(int id)
+        {
+            return await context.Burgers.AnyAsync(b => b.Id == id);
+        }
     }
 }

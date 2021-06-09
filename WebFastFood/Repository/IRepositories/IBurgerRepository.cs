@@ -13,5 +13,6 @@ namespace WebFastFood.Repository.IRepositories
         public Task<int> CreateAsync(Burger newBurger);
         public Task<int> DeleteAsync(Burger burger);
         public Task<int> UpdateAsync(Burger newBurger);
+        public Task<bool> BurgerExistsAsync(int id);
     }
 }

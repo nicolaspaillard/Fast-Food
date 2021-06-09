@@ -43,5 +43,9 @@ namespace WebFastFood.Repository
             context.Sides.First(s => s.Id == newSide.Id).SaltWeight = newSide.SaltWeight;
             return await context.SaveChangesAsync();
         }
+        public async Task<bool> SideExistsAsync(int id)
+        {
+            return await context.Sides.AnyAsync(d => d.Id == id);
+        }
     }
 }

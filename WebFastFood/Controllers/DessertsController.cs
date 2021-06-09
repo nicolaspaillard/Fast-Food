@@ -59,7 +59,7 @@ namespace WebFastFood.Controllers
         {
             if (ModelState.IsValid)
             {
-                _repository.CreateAsync(dessert);
+                await _repository.CreateAsync(dessert);
                 return RedirectToAction(nameof(Index));
             }
             return View(dessert);
@@ -88,27 +88,17 @@ namespace WebFastFood.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Millimeter,IsFrozen,Id,Name,Price,Description")] Dessert dessert)
         {
-            if (id != dessert.Id)
-            {
-                return NotFound();
-            }
-
+            if (id != dessert.Id) return NotFound();
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _repository.UpdateAsync(dessert);
+                    await _repository.UpdateAsync(dessert);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DessertExists(dessert.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!await DessertExists(dessert.Id)) return NotFound();
+                    else throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -118,17 +108,9 @@ namespace WebFastFood.Controllers
         // GET: Desserts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var dessert = await _repository.GetDessertAsync((int)id);
-            if (dessert == null)
-            {
-                return NotFound();
-            }
-
+            if (dessert == null) return NotFound();
             return View(dessert);
         }
 
@@ -142,9 +124,9 @@ namespace WebFastFood.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DessertExists(int id)
+        private async Task<bool> DessertExists(int id)
         {
-            return _repository.GetDessertsAsync().Result.Any(e => e.Id == id);
+            return await _repository.DessertExistsAsync(id);
         }
     }
 }

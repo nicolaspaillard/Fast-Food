@@ -29,17 +29,9 @@ namespace WebFastFood.Controllers
         // GET: Burgers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var burger = await _repository.GetBurgerAsync((int)id);
-            if (burger == null)
-            {
-                return NotFound();
-            }
-
+            if (burger == null) return NotFound();
             return View(burger);
         }
         // GET: Burgers/Create
@@ -56,7 +48,7 @@ namespace WebFastFood.Controllers
         {
             if (ModelState.IsValid)
             {
-                _repository.CreateAsync(burger);
+                await _repository.CreateAsync(burger);
                 return RedirectToAction(nameof(Index));
             }
             return View(burger);
@@ -64,16 +56,9 @@ namespace WebFastFood.Controllers
         // GET: Burgers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var burger = await _repository.GetBurgerAsync((int)id);
-            if (burger == null)
-            {
-                return NotFound();
-            }
+            if (burger == null) return NotFound();
             return View(burger);
         }
         // POST: Burgers/Edit/5
@@ -83,27 +68,17 @@ namespace WebFastFood.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Weight,BeefWeight,Id,Name,Price,Description")] Burger burger)
         {
-            if (id != burger.Id)
-            {
-                return NotFound();
-            }
-
+            if (id != burger.Id) return NotFound();
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _repository.UpdateAsync(burger);
+                    await _repository.UpdateAsync(burger);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BurgerExists(burger.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!await BurgerExists(burger.Id)) return NotFound();
+                    else throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -112,17 +87,9 @@ namespace WebFastFood.Controllers
         // GET: Burgers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var burger = await _repository.GetBurgerAsync((int)id);
-            if (burger == null)
-            {
-                return NotFound();
-            }
-
+            if (burger == null) return NotFound();
             return View(burger);
         }
         // POST: Burgers/Delete/5
@@ -134,9 +101,9 @@ namespace WebFastFood.Controllers
             await _repository.DeleteAsync(burger);
             return RedirectToAction(nameof(Index));
         }
-        private bool BurgerExists(int id)
+        private async Task<bool> BurgerExists(int id)
         {
-            return _repository.GetBurgersAsync().Result.Any(e => e.Id == id);
+            return await _repository.BurgerExistsAsync(id);
         }
     }
 }

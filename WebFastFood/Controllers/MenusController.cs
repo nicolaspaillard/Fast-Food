@@ -31,52 +31,26 @@ namespace WebFastFood.Controllers
             _burgers = burgers;
             _desserts = desserts;
             _sides = sides;
-            _productsViewModel.Burgers = _burgers.GetBurgersAsync().Result.Select(x =>
-                      new SelectListItem()
-                      {
-                          Text = x.Name,
-                          Value = x.Id.ToString()
-                      }).ToList();
-            _productsViewModel.Beverages = _beverages.GetBeveragesAsync().Result.Select(x =>
-                                  new SelectListItem()
-                                  {
-                                      Text = x.Name,
-                                      Value = x.Id.ToString()
-                                  }).ToList();
-            _productsViewModel.Sides = _sides.GetSidesAsync().Result.Select(x =>
-                                  new SelectListItem()
-                                  {
-                                      Text = x.Name,
-                                      Value = x.Id.ToString()
-                                  }).ToList();
+            _productsViewModel.Burgers.Add(new() { Text = "Pas de burger", Value = "-1" });
+            _productsViewModel.Burgers.AddRange(_burgers.GetBurgersAsync().Result.Select(x => new SelectListItem(){Text = x.Name,Value = x.Id.ToString()}).ToList());
+            _productsViewModel.Beverages.Add(new() { Text = "Pas de boisson", Value = "-1" });
+            _productsViewModel.Beverages.AddRange(_beverages.GetBeveragesAsync().Result.Select(x => new SelectListItem(){Text = x.Name,Value = x.Id.ToString()}).ToList());
+            _productsViewModel.Sides.Add(new() { Text = "Pas d'accompagnement", Value = "-1" });
+            _productsViewModel.Sides.AddRange(_sides.GetSidesAsync().Result.Select(x => new SelectListItem(){Text = x.Name,Value = x.Id.ToString()}).ToList());
             _productsViewModel.Desserts.Add(new() { Text = "Pas de dessert", Value="-1"});
-            _productsViewModel.Desserts.AddRange(_desserts.GetDessertsAsync().Result.Select(x =>
-                                  new SelectListItem()
-                                  {
-                                      Text = x.Name,
-                                      Value = x.Id.ToString()
-                                  }).ToList());
+            _productsViewModel.Desserts.AddRange(_desserts.GetDessertsAsync().Result.Select(x =>new SelectListItem(){Text = x.Name,Value = x.Id.ToString()}).ToList());
         }
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             return View(await _repository.GetMenusAsync());
-
         }
         // GET: Menus/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var menu = await _repository.GetMenuAsync((int)id);
-            if (menu == null)
-            {
-                return NotFound();
-            }
-
+            if (menu == null) return NotFound();
             return View(menu);
         }
 
@@ -95,15 +69,7 @@ namespace WebFastFood.Controllers
         {
             if (ModelState.IsValid)
             {
-                menu.Burger = await _burgers.GetBurgerAsync(menu.Burger.Id);
-                menu.Side = await _sides.GetSideAsync(menu.Side.Id);
-                menu.Beverage = await _beverages.GetBeverageAsync(menu.Beverage.Id);
-                if (menu.Dessert.Id != -1)
-                {
-                    menu.Dessert = await _desserts.GetDessertAsync(menu.Dessert.Id);
-                }
-                else { menu.Dessert = null; }
-                await _repository.CreateAsync(menu);
+                await _repository.CreateAsync(await GetMenu(menu));
                 return RedirectToAction(nameof(Index));
             }
             return View(_productsViewModel);
@@ -112,19 +78,12 @@ namespace WebFastFood.Controllers
         // GET: Menus/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
             var menu = await _repository.GetMenuAsync((int)id);
-            if (menu == null)
-            {
-                return NotFound();
-            }
+            if (menu == null) return NotFound();
             _productsViewModel.Menu = menu;
             return View(_productsViewModel);
         }
-
         // POST: Menus/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -141,22 +100,12 @@ namespace WebFastFood.Controllers
             {
                 try
                 {
-                    menu.Burger = await _burgers.GetBurgerAsync(menu.Burger.Id);
-                    menu.Side = await _sides.GetSideAsync(menu.Side.Id);
-                    menu.Beverage = await _beverages.GetBeverageAsync(menu.Beverage.Id);
-                    menu.Dessert = await _desserts.GetDessertAsync(menu.Dessert.Id);
-                    await _repository.UpdateAsync(menu);
+                    await _repository.UpdateAsync(await GetMenu(menu));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MenuExists(menu.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!await MenuExists(menu.Id)) return NotFound();
+                    else throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -166,17 +115,9 @@ namespace WebFastFood.Controllers
         // GET: Menus/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            if (id == null) return NotFound();
             var menu = await _repository.GetMenuAsync((int)id);
-            if (menu == null)
-            {
-                return NotFound();
-            }
-
+            if (menu == null) return NotFound();
             return View(menu);
         }
 
@@ -189,10 +130,21 @@ namespace WebFastFood.Controllers
             await _repository.DeleteAsync(menu);
             return RedirectToAction(nameof(Index));
         }
-
-        private bool MenuExists(int id)
+        private async Task<bool> MenuExists(int id)
         {
-            return _repository.GetMenusAsync().Result.Any(m => m.Id == id);
+            return await _repository.MenuExistsAsync(id);
+        }
+        public async Task<Menu> GetMenu(Menu menu)
+        {
+            if (menu.Burger.Id != -1) menu.Burger = await _burgers.GetBurgerAsync(menu.Burger.Id);
+            else menu.Burger = null;
+            if (menu.Side.Id != -1)menu.Side = await _sides.GetSideAsync(menu.Side.Id);
+            else menu.Side = null;
+            if (menu.Beverage.Id != -1) menu.Beverage = await _beverages.GetBeverageAsync(menu.Beverage.Id);
+            else menu.Beverage = null;
+            if (menu.Dessert.Id != -1) menu.Dessert = await _desserts.GetDessertAsync(menu.Dessert.Id);
+            else menu.Dessert = null;
+            return menu;
         }
     }
 }
