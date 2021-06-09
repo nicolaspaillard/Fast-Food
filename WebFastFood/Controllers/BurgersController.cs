@@ -66,7 +66,7 @@ namespace WebFastFood.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Weight,BeefWeight,Id,Name,Price,Description")] Burger burger)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Weight,BeefWeight,Id,Name,Price,Description")] Burger burger)
         {
             if (id != burger.Id) return NotFound();
             if (ModelState.IsValid)
