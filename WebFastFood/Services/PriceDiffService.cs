@@ -15,7 +15,7 @@ namespace WebFastFood.Services
         private IDessertRepository _desserts;
         private ISideRepository _sides;
 
-        public PriceDiffService(IMenuRepository repository,IBeverageRepository beverages, IBurgerRepository burgers, ISideRepository sides, IDessertRepository desserts)
+        public PriceDiffService(IMenuRepository repository, IBeverageRepository beverages, IBurgerRepository burgers, ISideRepository sides, IDessertRepository desserts)
         {
             _menus = repository;
             _beverages = beverages;
