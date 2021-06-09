@@ -40,7 +40,7 @@ namespace WebFastFood
             {
                 conf.ModelBinderProviders[4] = new FloatingTypeModelBinderProvider();
             });
-            services.AddControllersWithViews();
+            
 
         }
 
