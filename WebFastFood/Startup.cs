@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebFastFood.Binders;
 using WebFastFood.Repository;
 using WebFastFood.Repository.IRepositories;
 
@@ -35,7 +36,12 @@ namespace WebFastFood
             services.AddDbContext<FastFoodContext>(options =>
                      options.UseSqlServer(Configuration.GetConnectionString("FastFoodDb"))
                      );
+            services.AddControllersWithViews(conf =>
+            {
+                conf.ModelBinderProviders[4] = new FloatingTypeModelBinderProvider();
+            });
             services.AddControllersWithViews();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
