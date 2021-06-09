@@ -38,7 +38,7 @@
                 @Html.DisplayFor(modelItem => item.Price) €
             </td>
             <td>
-                @PriceDiffService.PriceDiff(item) €
+                @await PriceDiffService.PriceDiff(item) €
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
