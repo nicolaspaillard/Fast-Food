@@ -1,5 +1,5 @@
 ﻿@model List<Models.Menu>
-
+@inject WebFastFood.Services.PriceDiffService PriceDiffService
 @{
     ViewData["Title"] = "Index";
 }
@@ -15,6 +15,7 @@
             <th>Nom</th>
             <th>Composition</th>
             <th>Prix</th>
+            <th>Economies</th>
             <th>Description</th>
             <th></th>
         </tr>
@@ -34,7 +35,10 @@
                 </ul>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @Html.DisplayFor(modelItem => item.Price) €
+            </td>
+            <td>
+                @PriceDiffService.PriceDiff(item) €
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using WebFastFood.Binders;
 using WebFastFood.Repository;
 using WebFastFood.Repository.IRepositories;
+using WebFastFood.Services;
 
 namespace WebFastFood
 {
@@ -40,7 +41,7 @@ namespace WebFastFood
             {
                 conf.ModelBinderProviders[4] = new FloatingTypeModelBinderProvider();
             });
-            
+            services.AddTransient<PriceDiffService>();
 
         }
 
