@@ -37,24 +37,6 @@ namespace Dal
             modelBuilder.Entity<Dessert>().ToTable("Desserts");
             modelBuilder.Entity<Menu>().ToTable("Menus");
             modelBuilder.Entity<Side>().ToTable("Sides");
-
-            modelBuilder.Entity<Menu>().HasOne(m => m.Beverage);
-            modelBuilder.Entity<Menu>().HasOne(m => m.Burger);
-            modelBuilder.Entity<Menu>().HasOne(m => m.Side);
-
-            //modelBuilder.Entity<Person>()
-            //.HasKey(p => p.PersonId);
-            //modelBuilder.Entity<Person>()
-            //            .Property(p => p.PersonId)
-            //            .UseIdentityColumn();
-            //modelBuilder.Entity<Person>()
-            //            .Property(p => p.FirstName)
-            //            .HasMaxLength(30)
-            //            .IsRequired();
-            //modelBuilder.Entity<Classroom>()
-            //            .HasMany(c => c.Students)
-            //            .WithOne(s => s.Classroom);
-
             base.OnModelCreating(modelBuilder);
         }
     }
