@@ -83,7 +83,7 @@ namespace WebFastFood.Controllers
         // GET: Menus/Create
         public IActionResult Create()
         {
-            return View(_);
+            return View(_productsViewModel);
         }
 
         // POST: Menus/Create
