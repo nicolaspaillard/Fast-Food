@@ -21,7 +21,6 @@ namespace WebFastFood.Controllers
         private IBurgerRepository _burgers;
         private IDessertRepository _desserts;
         private ISideRepository _sides;
-
         private ProductsViewModel _productsViewModel = new();
         public MenusController(ILogger<MenusController> logger, IMenuRepository repository, IBeverageRepository beverages, IBurgerRepository burgers, IDessertRepository desserts, ISideRepository sides)
         {
@@ -53,13 +52,11 @@ namespace WebFastFood.Controllers
             if (menu == null) return NotFound();
             return View(menu);
         }
-
         // GET: Menus/Create
         public IActionResult Create()
         {
             return View(_productsViewModel);
         }
-
         // POST: Menus/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -74,7 +71,6 @@ namespace WebFastFood.Controllers
             }
             return View(_productsViewModel);
         }
-
         // GET: Menus/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -111,7 +107,6 @@ namespace WebFastFood.Controllers
             }
             return View(menu);
         }
-
         // GET: Menus/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -120,7 +115,6 @@ namespace WebFastFood.Controllers
             if (menu == null) return NotFound();
             return View(menu);
         }
-
         // POST: Menus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -129,7 +123,7 @@ namespace WebFastFood.Controllers
             var menu = await _repository.GetMenuAsync(id);
             await _repository.DeleteAsync(menu);
             return RedirectToAction(nameof(Index));
-        }
+        }        
         private async Task<bool> MenuExists(int id)
         {
             return await _repository.MenuExistsAsync(id);

@@ -26,7 +26,6 @@ namespace WebFastFood.Controllers
         {
             return View(await _repository.GetDessertsAsync());
         }
-
         // GET: Desserts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -43,13 +42,11 @@ namespace WebFastFood.Controllers
 
             return View(dessert);
         }
-
         // GET: Desserts/Create
         public IActionResult Create()
         {
             return View();
         }
-
         // POST: Desserts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -64,7 +61,6 @@ namespace WebFastFood.Controllers
             }
             return View(dessert);
         }
-
         // GET: Desserts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -80,7 +76,6 @@ namespace WebFastFood.Controllers
             }
             return View(dessert);
         }
-
         // POST: Desserts/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -104,7 +99,6 @@ namespace WebFastFood.Controllers
             }
             return View(dessert);
         }
-
         // GET: Desserts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -113,7 +107,6 @@ namespace WebFastFood.Controllers
             if (dessert == null) return NotFound();
             return View(dessert);
         }
-
         // POST: Desserts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -123,7 +116,6 @@ namespace WebFastFood.Controllers
             await _repository.DeleteAsync(dessert);
             return RedirectToAction(nameof(Index));
         }
-
         private async Task<bool> DessertExists(int id)
         {
             return await _repository.DessertExistsAsync(id);

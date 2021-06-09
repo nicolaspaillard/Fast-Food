@@ -21,13 +21,11 @@ namespace WebFastFood.Controllers
             _logger = logger;
             _repository = repository;
         }
-
         // GET: Sides
         public async Task<IActionResult> Index()
         {
             return View(await _repository.GetSidesAsync());
         }
-
         // GET: Sides/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -36,13 +34,11 @@ namespace WebFastFood.Controllers
             if (side == null) return NotFound();
             return View(side);
         }
-
         // GET: Sides/Create
         public IActionResult Create()
         {
             return View();
         }
-
         // POST: Sides/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -57,7 +53,6 @@ namespace WebFastFood.Controllers
             }
             return View(side);
         }
-
         // GET: Sides/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -66,7 +61,6 @@ namespace WebFastFood.Controllers
             if (side == null) return NotFound();
             return View(side);
         }
-
         // POST: Sides/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -90,7 +84,6 @@ namespace WebFastFood.Controllers
             }
             return View(side);
         }
-
         // GET: Sides/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -99,7 +92,6 @@ namespace WebFastFood.Controllers
             if (side == null) return NotFound();
             return View(side);
         }
-
         // POST: Sides/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -109,7 +101,6 @@ namespace WebFastFood.Controllers
             await _repository.DeleteAsync(side);
             return RedirectToAction(nameof(Index));
         }
-
         private async Task<bool> SideExists(int id)
         {
             return await _repository.SideExistsAsync(id);
